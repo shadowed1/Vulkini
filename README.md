@@ -6,11 +6,11 @@ Installer is not made yet. Please be careful. To install manually:
 1. Back up your VM or don't
 2. Go to Chrome://flags and enable GPU enabled
 3. Start Crostini/Penguin
-4. Identify Chromebook's SoC: (x86_64 or ARM) - Launch diagnostic app if you are unsure. 
 
 # =#=#=#= <br>
 # x86_64: <br>
 # =#=#=#= <br>
+
 
 `sudo apt install nano ` <br>
 `sudo nano /etc/apt/sources.list` <br>
@@ -42,54 +42,54 @@ Installer is not made yet. Please be careful. To install manually:
 `sudo apt install -y clang` <br>
 `sudo apt install -y libdisplay-info-dev` <br>
 
-cd ~
-mkdir venus
-cd venus
-git clone https://gitlab.freedesktop.org/mesa/mesa.git
-sudo apt-get build-dep mesa -y
-cd ~/venus/mesa
-git pull origin
+`cd ~` <br>
+`mkdir venus` <br>
+`cd venus` <br>
+`git clone https://gitlab.freedesktop.org/mesa/mesa.git` <br>
+`sudo apt-get build-dep mesa -y` <br>
+`cd ~/venus/mesa` <br>
+`git pull origin` <br>
 <br>
-meson setup --reconfigure build64 \
-  --libdir /usr/lib/x86_64-linux-gnu \
-  --wrap-mode=nofallback \
-  -Dllvm=enabled \
-  -Dprefix=/usr \
-  -Dgallium-drivers=virgl,zink \
-  -Dvulkan-drivers=virtio \
-  -Dvulkan-layers=device-select \
-  -Dglx=dri \
-  -Degl=enabled \
-  -Dgbm=enabled \
-  -Dgallium-vdpau=disabled \
-  -Dvalgrind=disabled
+`meson setup --reconfigure build64 \` <br>
+ ` --libdir /usr/lib/x86_64-linux-gnu \` <br>
+  `--wrap-mode=nofallback \` <br>
+  `-Dllvm=enabled \` <br>
+  `-Dprefix=/usr \` <br>
+  `-Dgallium-drivers=virgl,zink \` <br>
+  `-Dvulkan-drivers=virtio \` <br>
+  `-Dvulkan-layers=device-select \` <br>
+  `-Dglx=dri \` <br>
+  `-Degl=enabled \` <br>
+  `-Dgbm=enabled \` <br>
+  `-Dgallium-vdpau=disabled \` <br>
+  `-Dvalgrind=disabled` <br>
 <br>
-  sudo ninja -C build64 install
+  `sudo ninja -C build64 install` <br>
 <br>
-mkdir -p ~/.local/share/meson/cross
-sudo nano ~/.local/share/meson/cross/gcc-i686
+`mkdir -p ~/.local/share/meson/cross` <br>
+`sudo nano ~/.local/share/meson/cross/gcc-i686` <br>
 <br>
-`# gcc-i686`
-[binaries]
-c = '/usr/bin/gcc'
-cpp = '/usr/bin/g++'
-ar = '/usr/bin/gcc-ar'
-strip = '/usr/bin/strip'
-pkg-config = '/usr/bin/i686-linux-gnu-pkg-config'
-llvm-config = '/usr/bin/llvm-config'
-cmake = '/usr/bin/cmake' 
+`# gcc-i686` <br>
+`[binaries]` <br>
+`c = '/usr/bin/gcc'` <br>
+`cpp = '/usr/bin/g++'` <br>
+`ar = '/usr/bin/gcc-ar'` <br>
+`strip = '/usr/bin/strip'` <br>
+`pkg-config = '/usr/bin/i686-linux-gnu-pkg-config'` <br>
+`llvm-config = '/usr/bin/llvm-config'` <br>
+`cmake = '/usr/bin/cmake'` <br> 
 <br>
-[built-in options]
-c_args = ['-m32']
-c_link_args = ['-m32']
-cpp_args = ['-m32']
-cpp_link_args = ['-m32']
+`[built-in options]` <br>
+`c_args = ['-m32']` <br>
+`c_link_args = ['-m32']` <br>
+`cpp_args = ['-m32']` <br>
+`cpp_link_args = ['-m32']` <br>
 <br>
-[host_machine]
-system = 'linux'
-cpu_family = 'x86'
-cpu = 'i686'
-endian = 'little'
+`[host_machine]` <br>
+`system = 'linux'` <br>
+`cpu_family = 'x86'` <br>
+`cpu = 'i686'` <br>
+`endian = 'little'` <br>
 <br>
 `sudo apt install -y gcc-multilib` <br>
 `sudo apt install -y g++-multilib` <br>
