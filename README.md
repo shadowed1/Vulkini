@@ -1,7 +1,7 @@
 # Vulkini
 An installer enabling the Venus Vulkan driver in Crostini for a large performance boost
 
-Installer is not made yet. To install manually:
+Installer is not made yet. Please be careful. To install manually:
 
 1. Back up your VM or don't
 2. Go to Chrome://flags and enable GPU enabled
@@ -91,34 +91,34 @@ cpu_family = 'x86'
 cpu = 'i686'
 endian = 'little'
 <br>
-sudo apt install -y gcc-multilib
-sudo apt install -y g++-multilib
-sudo dpkg --add-architecture i386
-sudo apt-get update -y
-sudo apt install -y pkg-config:i386
-sudo apt-get -t sid install -y libdrm-dev:i386
-sudo apt install -y libwayland-dev:i386
-sudo apt install -y libwayland-egl-backend-dev:i386
-sudo apt install -y libxext-dev:i386
-sudo apt install -y libxfixes-dev:i386
-sudo apt install -y x11proto-dev:i386
-sudo apt install -y libxcb-glx0-dev:i386
-sudo apt install -y libxcb-shm0-dev:i386
-sudo apt install -y libx11-xcb-dev:i386
-sudo apt install -y libxcb-dri2-0-dev:i386
-sudo apt install -y libxcb-dri3-dev:i386
-sudo apt install -y libxcb-present-dev:i386
-sudo apt install -y Flibxshmfence-dev:i386
-sudo apt install -y libxxf86vm-dev:i386
-sudo apt install -y libxrandr-dev:i386
-sudo apt install -y libunwind-dev:i386
-sudo apt install -y libelf-dev:i386
-sudo apt install -y libzstd-dev:i386
-sudo apt install -y libbsd-dev:i386
-sudo apt install -y libsensors-dev:i386
-sudo apt install -y libxcb-keysyms1-dev:i386
-sudo apt install -y libva-dev:i386
-sudo apt install -y libxshmfence-dev:i386
+`sudo apt install -y gcc-multilib` <br>
+`sudo apt install -y g++-multilib` <br>
+`sudo dpkg --add-architecture i386` <br>
+`sudo apt-get update -y` <br>
+`sudo apt install -y pkg-config:i386` <br>
+`sudo apt-get -t sid install -y libdrm-dev:i386` <br>
+`sudo apt install -y libwayland-dev:i386` <br>
+`sudo apt install -y libwayland-egl-backend-dev:i386` <br>
+`sudo apt install -y libxext-dev:i386` <br>
+`sudo apt install -y libxfixes-dev:i386` <br>
+`sudo apt install -y x11proto-dev:i386` <br>
+`sudo apt install -y libxcb-glx0-dev:i386` <br>
+`sudo apt install -y libxcb-shm0-dev:i386` <br>
+`sudo apt install -y libx11-xcb-dev:i386` <br>
+`sudo apt install -y libxcb-dri2-0-dev:i386` <br>
+`sudo apt install -y libxcb-dri3-dev:i386` <br>
+`sudo apt install -y libxcb-present-dev:i386` <br>
+`sudo apt install -y Flibxshmfence-dev:i386` <br>
+`sudo apt install -y libxxf86vm-dev:i386` <br>
+`sudo apt install -y libxrandr-dev:i386` <br>
+`sudo apt install -y libunwind-dev:i386` <br>
+`sudo apt install -y libelf-dev:i386` <br>
+`sudo apt install -y libzstd-dev:i386` <br>
+`sudo apt install -y libbsd-dev:i386` <br>
+`sudo apt install -y libsensors-dev:i386` <br>
+`sudo apt install -y libxcb-keysyms1-dev:i386` <br>
+`sudo apt install -y libva-dev:i386` <br>
+`sudo apt install -y libxshmfence-dev:i386` <br>
 <br>
 meson setup --reconfigure build32 \
   --cross-file ~/.local/share/meson/cross/gcc-i686 \
