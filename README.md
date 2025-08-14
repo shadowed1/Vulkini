@@ -11,36 +11,23 @@ Installer is not made yet. Please be careful. To install manually:
 # x86_64: <br>
 # =#=#=#= <br>
 
-
-`sudo apt install nano ` <br>
+# 64bit driver: <br>
+`sudo apt install nano` <br>
 `sudo nano /etc/apt/sources.list` <br>
 
-`deb-src [arch=amd64,i386] http://deb.debian.org/debian sid main` <br>
-`deb http://http.us.debian.org/debian sid main non-free contrib` <br>
+Delete everyting in the file
+Add
+`deb https://deb.debian.org/debian trixie main` <br>
+`deb https://deb.debian.org/debian trixie-updates main` <br>
+`deb https://deb.debian.org/debian-security/ trixie-security main` <br>
+`deb-src [arch=amd64,i386] http://deb.debian.org/debian trixie main` <br>
+
 
 `sudo apt update` <br>
-`sudo apt install -y vulkan-tools` <br>
-`sudo apt install -y libepoxy-dev` <br>
-`sudo apt install -y libvulkan-dev` <br>
-`sudo apt install -y python3-yaml` <br>
-`sudo apt install -y git` <br>
-`sudo apt install -y meson` <br>
-`sudo apt install -y pkg-config` <br>
-`sudo apt install -y pkg-config libvulkan-dev` <br>
-`sudo apt install -y clang libclang-dev` <br>
-`sudo apt install -y zstd tar` <br>
-`sudo apt install -y mesa-utils` <br>
-`sudo apt install -y cmake` <br>
-`sudo apt install -y pkg-config cmake` <br>
-`sudo apt install -y lua5.4` <br>
-`sudo apt install -y liblua5.4-dev` <br>
-`sudo apt install -y vulkan-validationlayers` <br>
-`sudo apt install -y libunwind-dev` <br>
-`sudo apt install -y hwdata` <br>
-`sudo apt install -y llvm` <br>
-`sudo apt install -y llvm-dev` <br>
-`sudo apt install -y clang` <br>
-`sudo apt install -y libdisplay-info-dev` <br>
+`sudo apt full-upgrade -y` <br>
+`sudo apt install -y git meson vulkan-tools bison flex python3 python3-pip` <br>
+`pip install mako --break-system-packages` <br>
+`pip install packaging --break-system-packages` <br>
 
 `cd ~` <br>
 `mkdir venus` <br>
@@ -65,6 +52,12 @@ Installer is not made yet. Please be careful. To install manually:
   `-Dvalgrind=disabled` <br>
 <br>
   `sudo ninja -C build64 install` <br>
+# 32bit driver: <br>  
+`export MESA_GL_VERSION_OVERRIDE=4.6`  <br>
+`export MESA_GLSL_VERSION_OVERRIDE=460`  <br>
+`export MESA_GLES_VERSION_OVERRIDE=3.2`  <br>
+`VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/virtio_icd.x86_64.json
+source ~/.bashrc`  <br>
 <br>
 `mkdir -p ~/.local/share/meson/cross` <br>
 `sudo nano ~/.local/share/meson/cross/gcc-i686` <br>
@@ -120,7 +113,7 @@ Installer is not made yet. Please be careful. To install manually:
 `sudo apt install -y libva-dev:i386` <br>
 `sudo apt install -y libxshmfence-dev:i386` <br>
 <br>
-meson setup --reconfigure build32 \
+`meson setup --reconfigure build32 \
   --cross-file ~/.local/share/meson/cross/gcc-i686 \
   --wrap-mode=nofallback \
   -Dprefix=/usr \
@@ -131,18 +124,18 @@ meson setup --reconfigure build32 \
   -Dvalgrind=disabled \
   -Dgallium-drivers=virgl,zink \
   -Dvulkan-drivers=virtio \
-  -Dvulkan-layers=device-select
+  -Dvulkan-layers=device-select`
 <br>
-  sudo ninja -C build32 install
+  `sudo ninja -C build32 install`
 <br>
-VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/virtio_icd.i686.json:/usr/share/vulkan/icd.d/virtio_icd.json:/usr/share/vulkan/icd.d/virtio_icd.x86_64.json
+`VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/virtio_icd.i686.json:/usr/share/vulkan/icd.d/virtio_icd.json:/usr/share/vulkan/icd.d/virtio_icd.x86_64.json
 export MESA_GL_VERSION_OVERRIDE=4.6
 export MESA_GLSL_VERSION_OVERRIDE=460
-export MESA_GLES_VERSION_OVERRIDE=3.2
+export MESA_GLES_VERSION_OVERRIDE=3.2`
 <br>
-source ~/.bashrc
+`source ~/.bashrc`
 <br>
-sudo mv /usr/share/vulkan/explicit_layer.d/VkLayer_INTEL_nullhw.json /usr/share/vulkan/explicit_layer.d/VkLayer_INTEL_nullhw.json.disabled
+`sudo mv /usr/share/vulkan/explicit_layer.d/VkLayer_INTEL_nullhw.json /usr/share/vulkan/explicit_layer.d/VkLayer_INTEL_nullhw.json.disabled`
 
 <br><br>
 
