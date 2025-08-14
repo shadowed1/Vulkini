@@ -1,6 +1,4 @@
 # Vulkini
-An installer enabling the Venus Vulkan driver in Crostini for a large performance boost
-
 Installer is not made yet. Please be careful. To install manually:
 
 1. Back up your VM or don't
