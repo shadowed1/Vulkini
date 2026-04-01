@@ -210,4 +210,5 @@ meson setup --reconfigure build32 \
 sudo ninja -C build32 install
 
 rm -rf mesa-* 2>/dev/null
+vulkaninfo --summary
 
