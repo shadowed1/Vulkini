@@ -12,6 +12,8 @@ echo "${GREEN}In ChromeOS, make sure to go to ${BOLD}chrome://flags${RESET}${GRE
 echo "${CYAN}Starting Vulkan install in 10 seconds... ${RESET}"
 sleep 8
 
+sudo apt update
+
 getent group 44 || groupadd -g 44 video
 sudo gpasswd -a $USER video
 sudo gpasswd -a $USER render
