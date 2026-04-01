@@ -103,23 +103,12 @@ meson setup --reconfigure build64 \
     -Dgallium-d3d12-graphics=enabled \
     -Dvalgrind=enabled
 
+sudo ninja -C build64 install
+
 sudo cp build64/src/compiler/clc/mesa_clc /bin/ 2>/dev/null
 sudo cp build64/src/compiler/spirv/vtn_bindgen2 /bin/ 2>/dev/null
 sudo chmod +x /bin/mesa_clc 2>/dev/null
 sudo chmod +x /bin/vtn_bindgen2 2>/dev/null
-
-sudo ninja -C build64 install
-
-cd
-rm -rf mesa-* 2>/dev/null
-LATEST=$(curl -s https://archive.mesa3d.org/ \
-  | grep -oE 'mesa-[0-9]+\.[0-9]+\.[0-9]+\.tar\.xz' \
-  | grep -v 'rc' \
-  | sort -V \
-  | tail -n1)
-wget "https://archive.mesa3d.org/$LATEST"
-tar xf "$LATEST"
-cd "${LATEST%.tar.xz}"
 
 mkdir -p ~/.local/share/meson/cross
 
@@ -213,3 +202,4 @@ meson setup --reconfigure build32 \
 sudo ninja -C build32 install
 
 rm -rf mesa-* 2>/dev/null
+
