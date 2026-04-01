@@ -8,6 +8,10 @@ MAGENTA=$(tput setaf 5)
 BOLD=$(tput bold)
 RESET=$(tput sgr0)
 
+echo "${GREEN}In ChromeOS, make sure to go to ${BOLD}chrome://flags${RESET}${GREEN} and enable ${BOLD}Crostini GPU${RESET}${GREEN} flag! ${RESET}"
+echo "${CYAN}Starting Vulkan install in 10 seconds... ${RESET}"
+sleep 8
+
 getent group 44 || groupadd -g 44 video
 sudo gpasswd -a $USER video
 sudo gpasswd -a $USER render
