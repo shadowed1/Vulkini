@@ -197,15 +197,14 @@ meson setup --reconfigure build32 \
     -Dgbm=enabled \
     -Dgles1=enabled \
     -Dgles2=enabled \
-    -Dspirv-tools=enabled \
     -Dllvm=disabled \
     -Dmesa-clc=system \
     -Dspirv-tools=disabled \
     -Dgallium-rusticl=false \
     -Dvideo-codecs=all \
-    -Dgallium-d3d12-video=disabled \
-    -Dgallium-d3d12-graphics=disabled \
-    -Dvalgrind=disabled
+    -Dgallium-d3d12-video=enabled \
+    -Dgallium-d3d12-graphics=enabled \
+    -Dvalgrind=enabled
     
 sudo ninja -C build32 install
 
