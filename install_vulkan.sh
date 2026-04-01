@@ -22,6 +22,7 @@ deb-src https://deb.debian.org/debian trixie main contrib non-free non-free-firm
 EOF
 
 sudo apt upgrade -y
+sudo dpkg --add-architecture i386
 sudo apt update
 sudo apt install -y vulkan-tools
 sudo apt install -y libepoxy-dev
@@ -145,7 +146,6 @@ EOF
 
 sudo apt install -y gcc-multilib
 sudo apt install -y g++-multilib
-sudo dpkg --add-architecture i386
 sudo apt install -y pkg-config:i386
 sudo apt install -y libdrm-dev:i386
 sudo apt install -y libwayland-dev:i386
