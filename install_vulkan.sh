@@ -1,5 +1,13 @@
 #!/bin/bash
 
+RED=$(tput setaf 1)
+GREEN=$(tput setaf 2)
+YELLOW=$(tput setaf 3)
+BLUE=$(tput setaf 4)
+MAGENTA=$(tput setaf 5)
+BOLD=$(tput bold)
+RESET=$(tput sgr0)
+
 getent group 44 || groupadd -g 44 video
 sudo gpasswd -a $USER video
 sudo gpasswd -a $USER render
