@@ -213,5 +213,4 @@ meson setup --reconfigure build32 \
 sudo ninja -C build32 install
 
 rm -rf mesa-* 2>/dev/null
-vulkaninfo --summary
-
+GREP_COLORS='mt=01;31' vulkaninfo --summary | grep -i --color=always -E 'venus|virtio|$'
