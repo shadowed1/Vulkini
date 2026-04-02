@@ -9,9 +9,9 @@ if [ ! -f "$VENV/bin/activate" ]; then
     echo "[vulkini_meson] Creating venv at $VENV"
     python3 -m venv "$VENV"
     source "$VENV/bin/activate"
-    echo "[vulkini_meson] Installing meson + ninja"
+    echo "Installing meson + ninja"
     pip install --upgrade pip
-    pip install meson ninja
+    pip install meson ninja mako pyyaml ply
 else
     source "$VENV/bin/activate"
 fi
