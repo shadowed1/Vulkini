@@ -100,8 +100,8 @@ LATEST=$(curl -s https://archive.mesa3d.org/ \
 wget "https://archive.mesa3d.org/$LATEST"
 tar xf "$LATEST"
 cd "${LATEST%.tar.xz}"
-
-meson setup --reconfigure build64 \
+rm -rf build64 2>/dev/null
+meson setup build64 \
     --libdir /usr/lib/x86_64-linux-gnu \
     --wrap-mode=nofallback \
     -Dprefix=/usr \
@@ -191,8 +191,8 @@ sudo apt install -y libxcb-sync-dev:i386
 sudo apt install -y libxcb-xfixes0-dev:i386
 sudo apt install -y libxdamage-dev:i386
 sudo apt install -y libxcb-dri3-dev:i386
-
-meson setup --reconfigure build32 \
+rm -rf build32 2>/dev/null
+meson setup build32 \
     --cross-file ~/.local/share/meson/cross/i686-cross.ini \
     --wrap-mode=nofallback \
     -Dprefix=/usr \
