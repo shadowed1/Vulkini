@@ -7,9 +7,10 @@ BLUE=$(tput setaf 4)
 MAGENTA=$(tput setaf 5)
 BOLD=$(tput bold)
 RESET=$(tput sgr0)
-
+echo
 echo "${GREEN}In ChromeOS, make sure to go to ${BOLD}chrome://flags ${RESET}${GREEN} and enable ${BOLD}Crostini GPU${RESET}${GREEN} flag! ${RESET}"
 echo "${CYAN}Starting Vulkan install in 10 seconds... ${RESET}"
+echo
 sleep 8
 
 sudo apt update
