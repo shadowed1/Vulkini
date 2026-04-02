@@ -8,7 +8,7 @@ MAGENTA=$(tput setaf 5)
 BOLD=$(tput bold)
 RESET=$(tput sgr0)
 
-echo "${GREEN}In ChromeOS, make sure to go to ${BOLD}chrome://flags${RESET}${GREEN} and enable ${BOLD}Crostini GPU${RESET}${GREEN} flag! ${RESET}"
+echo "${GREEN}In ChromeOS, make sure to go to ${BOLD}chrome://flags ${RESET}${GREEN} and enable ${BOLD}Crostini GPU${RESET}${GREEN} flag! ${RESET}"
 echo "${CYAN}Starting Vulkan install in 10 seconds... ${RESET}"
 sleep 8
 
@@ -215,4 +215,4 @@ meson setup --reconfigure build32 \
 sudo ninja -C build32 install
 
 rm -rf mesa-* 2>/dev/null
-GREP_COLORS='mt=01;31' vulkaninfo --summary | grep -i --color=always -E 'venus|virtio|$'
+vulkaninfo --summary
