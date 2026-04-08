@@ -38,18 +38,63 @@ if [ "$(uname -m)" != "aarch64" ]; then
 fi
 
 sudo apt update
-sudo apt install -y \
-vulkan-tools libepoxy-dev libvulkan-dev python3-yaml git meson pkg-config \
-clang libclang-dev zstd tar mesa-utils cmake lua5.4 liblua5.4-dev \
-vulkan-validationlayers libunwind-dev hwdata llvm llvm-dev \
-libdisplay-info-dev valgrind libglvnd-dev glslang-tools libva-dev \
-python3-mako zlib1g-dev libzstd-dev libexpat1-dev libdrm-dev byacc \
-libudev-dev libelf-dev bison flex wayland-protocols \
-libwayland-egl-backend-dev libxcb-randr0-dev libxext-dev \
-libxcb-glx0-dev libxcb-shm0-dev libx11-xcb-dev libxcb-keysyms1-dev \
-libxcb-dri3-dev libxcb-present-dev libxshmfence-dev libxxf86vm-dev \
-libxrandr-dev libclc-19-dev llvm-19-dev llvm-spirv-19 \
-libllvmspirvlib-19-dev clang-19 libclang-19-dev
+sudo apt install -y vulkan-tools
+sudo apt install -y libepoxy-dev
+sudo apt install -y libvulkan-dev
+sudo apt install -y python3-yaml
+sudo apt install -y git
+sudo apt install -y meson
+sudo apt install -y pkg-config
+sudo apt install -y pkg-config libvulkan-dev
+#sudo apt install -y libclang-dev
+sudo apt install -y zstd tar
+sudo apt install -y mesa-utils
+sudo apt install -y cmake
+sudo apt install -y pkg-config cmake
+sudo apt install -y lua5.4
+sudo apt install -y liblua5.4-dev
+sudo apt install -y vulkan-validationlayers
+sudo apt install -y libunwind-dev
+sudo apt install -y hwdata
+#sudo apt install -y llvm
+#sudo apt install -y llvm-dev
+#sudo apt install -y clang
+sudo apt install -y libdisplay-info-dev
+sudo apt install -y valgrind
+#sudo apt install -y libglvnd-dev
+sudo apt install -y glslang-tools
+#sudo apt install -y libva-dev
+sudo apt install -y python3-mako
+sudo apt install -y zlib1g-dev
+sudo apt install -y libzstd-dev
+sudo apt install -y libexpat1-dev
+#sudo apt install -y libdrm-dev
+sudo apt install -y byacc
+sudo apt install -y libudev-dev
+sudo apt install -y libelf-dev
+sudo apt install -y bison
+sudo apt install -y flex
+sudo apt install -y wayland-protocols
+sudo apt install -y libwayland-egl-backend-dev
+sudo apt install -y libxcb-randr0-dev
+sudo apt install -y libxext-dev
+sudo apt install -y libxcb-glx0-dev
+sudo apt install -y libxcb-shm0-dev
+sudo apt install -y libx11-xcb-dev
+sudo apt install -y libxcb-keysyms1-dev
+sudo apt install -y libxcb-dri3-dev
+sudo apt install -y libxcb-present-dev
+sudo apt install -y libxshmfence-dev
+sudo apt install -y libxxf86vm-dev
+sudo apt install -y libxrandr-dev
+sudo apt install -y libclc-19-dev
+sudo apt install -y llvm-19-dev 
+sudo apt install -y llvm-spirv-19
+sudo apt install -y libllvmspirvlib-19-dev
+sudo apt install -y clang-19 
+sudo apt install -y libclang-19-dev
+sudo apt install -y llvm-19-dev 
+sudo apt install -y llvm-spirv-19
 
 cd
 rm -rf mesa-* 2>/dev/null
@@ -124,19 +169,45 @@ cpu = 'i686'
 endian = 'little'
 EOF
 
-    sudo apt install -y \
-    gcc-multilib g++-multilib \
-    pkg-config:i386 libdrm-dev:i386 libwayland-dev:i386 \
-    libwayland-egl-backend-dev:i386 libxext-dev:i386 libxfixes-dev:i386 \
-    x11proto-dev:i386 libxcb-glx0-dev:i386 libxcb-shm0-dev:i386 \
-    libx11-xcb-dev:i386 libxcb-dri2-0-dev:i386 libxcb-dri3-dev:i386 \
-    libxcb-present-dev:i386 libxshmfence-dev:i386 libxxf86vm-dev:i386 \
-    libxrandr-dev:i386 libunwind-dev:i386 libelf-dev:i386 \
-    libzstd-dev:i386 libbsd-dev:i386 libsensors-dev:i386 \
-    libxcb-keysyms1-dev:i386 libva-dev:i386 libvulkan-dev:i386 \
-    libglvnd-dev:i386 libexpat1-dev:i386 zlib1g-dev:i386 \
-    libx11-dev:i386 libxcb-randr0-dev:i386 libxcb1-dev:i386 \
-    libxcb-sync-dev:i386 libxcb-xfixes0-dev:i386 libxdamage-dev:i386
+    sudo apt install -y gcc-multilib
+    sudo apt install -y g++-multilib
+    sudo apt install -y pkg-config:i386
+    sudo apt install -y libdrm-dev:i386
+    sudo apt install -y libwayland-dev:i386
+    sudo apt install -y libwayland-egl-backend-dev:i386
+    sudo apt install -y libxext-dev:i386
+    sudo apt install -y libxfixes-dev:i386
+    sudo apt install -y x11proto-dev:i386
+    sudo apt install -y libxcb-glx0-dev:i386
+    sudo apt install -y libxcb-shm0-dev:i386
+    sudo apt install -y libx11-xcb-dev:i386
+    sudo apt install -y libxcb-dri2-0-dev:i386
+    sudo apt install -y libxcb-dri3-dev:i386
+    sudo apt install -y libxcb-present-dev:i386
+    sudo apt install -y libxshmfence-dev:i386
+    sudo apt install -y libxxf86vm-dev:i386
+    sudo apt install -y libxrandr-dev:i386
+    sudo apt install -y libunwind-dev:i386
+    sudo apt install -y libelf-dev:i386
+    sudo apt install -y libzstd-dev:i386
+    sudo apt install -y libbsd-dev:i386
+    sudo apt install -y libsensors-dev:i386
+    sudo apt install -y libxcb-keysyms1-dev:i386
+    sudo apt install -y libva-dev:i386
+    sudo apt install -y libxshmfence-dev:i386
+    sudo apt install -y libvulkan-dev:i386
+    sudo apt install -y libglvnd-dev:i386
+    sudo apt install -y libexpat1-dev:i386
+    sudo apt install -y zlib1g-dev:i386
+    sudo apt install -y libx11-dev:i386
+    sudo apt install -y libxcb-randr0-dev:i386
+    sudo apt install -y libxcb-dri2-0-dev:i386
+    sudo apt install -y libxfixes-dev:i386
+    sudo apt install -y libxcb1-dev:i386
+    sudo apt install -y libxcb-sync-dev:i386
+    sudo apt install -y libxcb-xfixes0-dev:i386
+    sudo apt install -y libxdamage-dev:i386
+    sudo apt install -y libxcb-dri3-dev:i386
 
     rm -rf build32 2>/dev/null
 
