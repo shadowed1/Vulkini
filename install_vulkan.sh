@@ -116,14 +116,16 @@ case "$ARCH" in
     x86_64)
         LIBDIR="lib/x86_64-linux-gnu"
 
-        # Detect CPU vendor for Intel vs AMD
+        # Removing specific GPU support
         CPU_VENDOR=$(grep -m1 "vendor_id" /proc/cpuinfo | awk -F: '{print $2}' | xargs)
         case "$CPU_VENDOR" in
             GenuineIntel)
-                VULKAN_DRIVERS="intel,virtio"
+                VULKAN_DRIVERS="virtio"
+                # intel,virtio
                 ;;
             AuthenticAMD)
-                VULKAN_DRIVERS="amd,virtio"
+                VULKAN_DRIVERS="virtio"
+                # amd,virtio
                 ;;
             *)
                 echo "${YELLOW}Unknown x86 CPU vendor: $CPU_VENDOR. Defaulting to virtio.${RESET}"
@@ -246,7 +248,7 @@ EOF
         -Dprefix=/usr \
         -Dlibdir=lib/i386-linux-gnu \
         -Dplatforms=x11,wayland \
-        -Dvulkan-drivers=intel,virtio \
+        -Dvulkan-drivers=virtio \
         -Dgallium-drivers=virgl,zink \
         -Dglx=dri \
         -Degl=enabled \
