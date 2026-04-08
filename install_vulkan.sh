@@ -109,15 +109,24 @@ tar xf "$LATEST"
 cd "${LATEST%.tar.xz}"
 rm -rf build64 2>/dev/null
 ARCH="$(uname -m)"
-
-if [ "$ARCH" = "aarch64" ]; then
-    VULKAN_DRIVERS="virtio"
-else
-    VULKAN_DRIVERS="intel,virtio"
-fi
+case "$ARCH" in
+    x86_64)
+        LIBDIR="lib/x86_64-linux-gnu"
+        VULKAN_DRIVERS="intel,virtio"
+        ;;
+    aarch64)
+        LIBDIR="lib/aarch64-linux-gnu"
+        VULKAN_DRIVERS="virtio"
+        ;;
+    *)
+        echo "${RED}Unsupported arch: $ARCH ${RESET}"
+        sleep 5
+        exit 1
+        ;;
+esac
 
 meson setup build64 \
-    --libdir /usr/lib/x86_64-linux-gnu \
+    --libdir "$LIBDIR" \
     --wrap-mode=nofallback \
     -Dprefix=/usr \
     -Dplatforms=x11,wayland \
