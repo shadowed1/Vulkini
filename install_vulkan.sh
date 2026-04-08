@@ -46,7 +46,7 @@ sudo apt install -y git
 sudo apt install -y meson
 sudo apt install -y pkg-config
 sudo apt install -y libvulkan-dev
-#sudo apt install -y libclang-dev
+sudo apt install -y libclang-dev
 sudo apt install -y tar
 sudo apt install -y zstd
 sudo apt install -y mesa-utils
@@ -57,19 +57,20 @@ sudo apt install -y liblua5.4-dev
 sudo apt install -y vulkan-validationlayers
 sudo apt install -y libunwind-dev
 sudo apt install -y hwdata
-#sudo apt install -y llvm
-#sudo apt install -y llvm-dev
-#sudo apt install -y clang
+sudo apt upgrade -y
+sudo apt install -y llvm
+sudo apt install -y llvm-dev
+sudo apt install -y clang
 sudo apt install -y libdisplay-info-dev
 sudo apt install -y valgrind
-#sudo apt install -y libglvnd-dev
+sudo apt install -y libglvnd-dev
 sudo apt install -y glslang-tools
-#sudo apt install -y libva-dev
+sudo apt install -y libva-dev
 sudo apt install -y python3-mako
 sudo apt install -y zlib1g-dev
 sudo apt install -y libzstd-dev
 sudo apt install -y libexpat1-dev
-#sudo apt install -y libdrm-dev
+sudo apt install -y libdrm-dev
 sudo apt install -y byacc
 sudo apt install -y libudev-dev
 sudo apt install -y libelf-dev
@@ -96,6 +97,7 @@ sudo apt install -y clang-19
 sudo apt install -y libclang-19-dev
 sudo apt install -y llvm-19-dev 
 sudo apt install -y llvm-spirv-19
+sudo apt upgrade -y
 
 cd
 rm -rf mesa-* 2>/dev/null
@@ -109,10 +111,25 @@ tar xf "$LATEST"
 cd "${LATEST%.tar.xz}"
 rm -rf build64 2>/dev/null
 ARCH="$(uname -m)"
+
 case "$ARCH" in
     x86_64)
         LIBDIR="lib/x86_64-linux-gnu"
-        VULKAN_DRIVERS="intel,virtio"
+
+        # Detect CPU vendor for Intel vs AMD
+        CPU_VENDOR=$(grep -m1 "vendor_id" /proc/cpuinfo | awk -F: '{print $2}' | xargs)
+        case "$CPU_VENDOR" in
+            GenuineIntel)
+                VULKAN_DRIVERS="intel,virtio"
+                ;;
+            AuthenticAMD)
+                VULKAN_DRIVERS="amd,virtio"
+                ;;
+            *)
+                echo "${YELLOW}Unknown x86 CPU vendor: $CPU_VENDOR. Defaulting to virtio.${RESET}"
+                VULKAN_DRIVERS="virtio"
+                ;;
+        esac
         ;;
     aarch64)
         LIBDIR="lib/aarch64-linux-gnu"
@@ -143,7 +160,6 @@ meson setup build64 \
     -Dgallium-d3d12-video=enabled \
     -Dgallium-d3d12-graphics=enabled \
     -Dvalgrind=enabled
-
 sudo ninja -C build64 install
 
 ARCH="$(uname -m)"
@@ -179,6 +195,8 @@ cpu = 'i686'
 endian = 'little'
 EOF
 
+    sudo apt update
+    sudo apt upgrade -y
     sudo apt install -y gcc-multilib
     sudo apt install -y g++-multilib
     sudo apt install -y pkg-config:i386
@@ -218,6 +236,7 @@ EOF
     sudo apt install -y libxcb-xfixes0-dev:i386
     sudo apt install -y libxdamage-dev:i386
     sudo apt install -y libxcb-dri3-dev:i386
+    sudo apt upgrade -y
 
     rm -rf build32 2>/dev/null
 
