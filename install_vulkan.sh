@@ -45,12 +45,13 @@ sudo apt install -y python3-yaml
 sudo apt install -y git
 sudo apt install -y meson
 sudo apt install -y pkg-config
-sudo apt install -y pkg-config libvulkan-dev
+sudo apt install -y libvulkan-dev
 #sudo apt install -y libclang-dev
-sudo apt install -y zstd tar
+sudo apt install -y tar
+sudo apt install -y zstd
 sudo apt install -y mesa-utils
 sudo apt install -y cmake
-sudo apt install -y pkg-config cmake
+sudo apt install -y pkg-config
 sudo apt install -y lua5.4
 sudo apt install -y liblua5.4-dev
 sudo apt install -y vulkan-validationlayers
