@@ -101,12 +101,20 @@ wget "https://archive.mesa3d.org/$LATEST"
 tar xf "$LATEST"
 cd "${LATEST%.tar.xz}"
 rm -rf build64 2>/dev/null
+ARCH="$(uname -m)"
+
+if [ "$ARCH" = "aarch64" ]; then
+    VULKAN_DRIVERS="virtio"
+else
+    VULKAN_DRIVERS="intel,virtio"
+fi
+
 meson setup build64 \
     --libdir /usr/lib/x86_64-linux-gnu \
     --wrap-mode=nofallback \
     -Dprefix=/usr \
     -Dplatforms=x11,wayland \
-    -Dvulkan-drivers=intel,virtio \
+    -Dvulkan-drivers="$VULKAN_DRIVERS" \
     -Dgallium-drivers=virgl,zink \
     -Dglx=dri \
     -Degl=enabled \
@@ -122,12 +130,15 @@ meson setup build64 \
 
 sudo ninja -C build64 install
 
-sudo cp build64/src/compiler/clc/mesa_clc /bin/ 2>/dev/null
-sudo cp build64/src/compiler/spirv/vtn_bindgen2 /bin/ 2>/dev/null
-sudo chmod +x /bin/mesa_clc 2>/dev/null
-sudo chmod +x /bin/vtn_bindgen2 2>/dev/null
+ARCH="$(uname -m)"
 
-mkdir -p ~/.local/share/meson/cross
+if [ "$ARCH" = "x86_64" ]; then
+    sudo cp build64/src/compiler/clc/mesa_clc /bin/ 2>/dev/null
+    sudo cp build64/src/compiler/spirv/vtn_bindgen2 /bin/ 2>/dev/null
+    sudo chmod +x /bin/mesa_clc 2>/dev/null
+    sudo chmod +x /bin/vtn_bindgen2 2>/dev/null
+
+    mkdir -p ~/.local/share/meson/cross
 
     cat > ~/.local/share/meson/cross/i686-cross.ini << 'EOF'
 [binaries]
@@ -152,69 +163,46 @@ cpu = 'i686'
 endian = 'little'
 EOF
 
-sudo apt install -y gcc-multilib
-sudo apt install -y g++-multilib
-sudo apt install -y pkg-config:i386
-sudo apt install -y libdrm-dev:i386
-sudo apt install -y libwayland-dev:i386
-sudo apt install -y libwayland-egl-backend-dev:i386
-sudo apt install -y libxext-dev:i386
-sudo apt install -y libxfixes-dev:i386
-sudo apt install -y x11proto-dev:i386
-sudo apt install -y libxcb-glx0-dev:i386
-sudo apt install -y libxcb-shm0-dev:i386
-sudo apt install -y libx11-xcb-dev:i386
-sudo apt install -y libxcb-dri2-0-dev:i386
-sudo apt install -y libxcb-dri3-dev:i386
-sudo apt install -y libxcb-present-dev:i386
-sudo apt install -y libxshmfence-dev:i386
-sudo apt install -y libxxf86vm-dev:i386
-sudo apt install -y libxrandr-dev:i386
-sudo apt install -y libunwind-dev:i386
-sudo apt install -y libelf-dev:i386
-sudo apt install -y libzstd-dev:i386
-sudo apt install -y libbsd-dev:i386
-sudo apt install -y libsensors-dev:i386
-sudo apt install -y libxcb-keysyms1-dev:i386
-sudo apt install -y libva-dev:i386
-sudo apt install -y libxshmfence-dev:i386
-sudo apt install -y libvulkan-dev:i386
-sudo apt install -y libglvnd-dev:i386
-sudo apt install -y libexpat1-dev:i386
-sudo apt install -y zlib1g-dev:i386
-sudo apt install -y libx11-dev:i386
-sudo apt install -y libxcb-randr0-dev:i386
-sudo apt install -y libxcb-dri2-0-dev:i386
-sudo apt install -y libxfixes-dev:i386
-sudo apt install -y libxcb1-dev:i386
-sudo apt install -y libxcb-sync-dev:i386
-sudo apt install -y libxcb-xfixes0-dev:i386
-sudo apt install -y libxdamage-dev:i386
-sudo apt install -y libxcb-dri3-dev:i386
-rm -rf build32 2>/dev/null
-meson setup build32 \
-    --cross-file ~/.local/share/meson/cross/i686-cross.ini \
-    --wrap-mode=nofallback \
-    -Dprefix=/usr \
-    -Dlibdir=lib/i386-linux-gnu \
-    -Dplatforms=x11,wayland \
-    -Dvulkan-drivers=intel,virtio \
-    -Dgallium-drivers=virgl,zink \
-    -Dglx=dri \
-    -Degl=enabled \
-    -Dgbm=enabled \
-    -Dgles1=enabled \
-    -Dgles2=enabled \
-    -Dllvm=disabled \
-    -Dmesa-clc=system \
-    -Dspirv-tools=disabled \
-    -Dgallium-rusticl=false \
-    -Dvideo-codecs=all \
-    -Dgallium-d3d12-video=enabled \
-    -Dgallium-d3d12-graphics=enabled \
-    -Dvalgrind=disabled
-    
-sudo ninja -C build32 install
+    sudo apt install -y \
+    gcc-multilib g++-multilib \
+    pkg-config:i386 libdrm-dev:i386 libwayland-dev:i386 \
+    libwayland-egl-backend-dev:i386 libxext-dev:i386 libxfixes-dev:i386 \
+    x11proto-dev:i386 libxcb-glx0-dev:i386 libxcb-shm0-dev:i386 \
+    libx11-xcb-dev:i386 libxcb-dri2-0-dev:i386 libxcb-dri3-dev:i386 \
+    libxcb-present-dev:i386 libxshmfence-dev:i386 libxxf86vm-dev:i386 \
+    libxrandr-dev:i386 libunwind-dev:i386 libelf-dev:i386 \
+    libzstd-dev:i386 libbsd-dev:i386 libsensors-dev:i386 \
+    libxcb-keysyms1-dev:i386 libva-dev:i386 libvulkan-dev:i386 \
+    libglvnd-dev:i386 libexpat1-dev:i386 zlib1g-dev:i386 \
+    libx11-dev:i386 libxcb-randr0-dev:i386 libxcb1-dev:i386 \
+    libxcb-sync-dev:i386 libxcb-xfixes0-dev:i386 libxdamage-dev:i386
+
+    rm -rf build32 2>/dev/null
+
+    meson setup build32 \
+        --cross-file ~/.local/share/meson/cross/i686-cross.ini \
+        --wrap-mode=nofallback \
+        -Dprefix=/usr \
+        -Dlibdir=lib/i386-linux-gnu \
+        -Dplatforms=x11,wayland \
+        -Dvulkan-drivers=intel,virtio \
+        -Dgallium-drivers=virgl,zink \
+        -Dglx=dri \
+        -Degl=enabled \
+        -Dgbm=enabled \
+        -Dgles1=enabled \
+        -Dgles2=enabled \
+        -Dllvm=disabled \
+        -Dmesa-clc=system \
+        -Dspirv-tools=disabled \
+        -Dgallium-rusticl=false \
+        -Dvideo-codecs=all \
+        -Dgallium-d3d12-video=enabled \
+        -Dgallium-d3d12-graphics=enabled \
+        -Dvalgrind=disabled
+
+    sudo ninja -C build32 install
+fi
 
 rm -rf mesa-* 2>/dev/null
 vulkaninfo --summary
