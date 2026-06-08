@@ -144,10 +144,11 @@ case "$ARCH" in
         ;;
 esac
 
+sudo mkdir -p /opt/mesa
 meson setup build64 \
     --libdir "$LIBDIR" \
     --wrap-mode=nofallback \
-    -Dprefix=/usr \
+    -Dprefix=/opt/mesa \
     -Dplatforms=x11,wayland \
     -Dvulkan-drivers="$VULKAN_DRIVERS" \
     -Dgallium-drivers=virgl,zink \
@@ -242,10 +243,11 @@ EOF
 
     rm -rf build32 2>/dev/null
 
+    sudo mkdir -p /opt/mesa
     meson setup build32 \
         --cross-file ~/.local/share/meson/cross/i686-cross.ini \
         --wrap-mode=nofallback \
-        -Dprefix=/usr \
+        -Dprefix=/opt/mesa \
         -Dlibdir=lib/i386-linux-gnu \
         -Dplatforms=x11,wayland \
         -Dvulkan-drivers=virtio \
@@ -269,3 +271,6 @@ fi
 
 rm -rf mesa-* 2>/dev/null
 vulkaninfo --summary
+echo
+echo "${GREEN}Drivers installed to ${BOLD}/opt/mesa${RESET}"
+echo
