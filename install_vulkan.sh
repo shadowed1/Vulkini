@@ -207,8 +207,8 @@ cpu = 'i686'
 endian = 'little'
 EOF
 
-    sudo apt update
-    # sudo apt upgrade -y
+    sudo apt --fix-broken install -y
+    sudo apt -o Acquire::ForceIPv4=true update
     sudo apt install -y --no-upgrade --no-install-recommends gcc-multilib
     sudo apt install -y --no-upgrade --no-install-recommends g++-multilib
     sudo apt install -y --no-upgrade --no-install-recommends pkg-config:i386
