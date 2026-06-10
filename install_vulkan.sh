@@ -74,22 +74,16 @@ sudo apt install -y --no-upgrade --no-install-recommends mesa-utils
 sudo apt install -y --no-upgrade --no-install-recommends cmake
 sudo apt install -y --no-upgrade --no-install-recommends pkg-config
 sudo apt install -y --no-upgrade --no-install-recommends lua5.4
-
 sudo apt install -y --no-upgrade --no-install-recommends liblua5.4-dev
 sudo apt install -y --no-upgrade --no-install-recommends vulkan-validationlayers
 sudo apt install -y --no-upgrade --no-install-recommends libunwind-dev
 sudo apt install -y --no-upgrade --no-install-recommends hwdata
-
-# sudo apt upgrade -y
-
 sudo apt install -y --no-upgrade --no-install-recommends llvm
 sudo apt install -y --no-upgrade --no-install-recommends llvm-dev
 sudo apt install -y --no-upgrade --no-install-recommends clang
-
 sudo apt install -y --no-upgrade --no-install-recommends libdisplay-info-dev
 sudo apt install -y --no-upgrade --no-install-recommends valgrind
 sudo apt install -y --no-upgrade --no-install-recommends libglvnd-dev
-
 sudo apt install -y --no-upgrade --no-install-recommends glslang-tools
 sudo apt install -y --no-upgrade --no-install-recommends libva-dev
 sudo apt install -y --no-upgrade --no-install-recommends python3-mako
@@ -100,11 +94,9 @@ sudo apt install -y --no-upgrade --no-install-recommends libdrm-dev
 sudo apt install -y --no-upgrade --no-install-recommends byacc
 sudo apt install -y --no-upgrade --no-install-recommends libudev-dev
 sudo apt install -y --no-upgrade --no-install-recommends libelf-dev
-
 sudo apt install -y --no-upgrade --no-install-recommends bison
 sudo apt install -y --no-upgrade --no-install-recommends flex
 sudo apt install -y --no-upgrade --no-install-recommends wayland-protocols
-
 sudo apt install -y --no-upgrade --no-install-recommends libwayland-egl-backend-dev
 sudo apt install -y --no-upgrade --no-install-recommends libxcb-randr0-dev
 sudo apt install -y --no-upgrade --no-install-recommends libxext-dev
@@ -117,7 +109,7 @@ sudo apt install -y --no-upgrade --no-install-recommends libxcb-present-dev
 sudo apt install -y --no-upgrade --no-install-recommends libxshmfence-dev
 sudo apt install -y --no-upgrade --no-install-recommends libxxf86vm-dev
 sudo apt install -y --no-upgrade --no-install-recommends libxrandr-dev
-sudo apt install -y libclc-19-dev
+sudo apt install -y --no-upgrade --no-install-recommends libclc-19-dev
 sudo apt install -y --no-upgrade --no-install-recommends llvm-19-dev 
 sudo apt install -y --no-upgrade --no-install-recommends llvm-spirv-19
 sudo apt install -y --no-upgrade --no-install-recommends libllvmspirvlib-19-dev
