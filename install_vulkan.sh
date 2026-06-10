@@ -74,6 +74,7 @@ if [ "$(uname -m)" != "aarch64" ]; then
     fi
 fi
 
+echo "${BLUE}"
 sudo apt -o Acquire::ForceIPv4=true update
 sudo apt install -y --no-upgrade --no-install-recommends vulkan-tools
 sudo apt install -y --no-upgrade --no-install-recommends libepoxy-dev
@@ -135,7 +136,7 @@ sudo apt install -y --no-upgrade --no-install-recommends llvm-19-dev
 sudo apt install -y --no-upgrade --no-install-recommends llvm-spirv-19
 #curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 sudo apt install -y --no-upgrade --no-install-recommends bindgen
-
+echo "${RESET}"
 
 # sudo apt -o Acquire::ForceIPv4=true upgrade -y
 
@@ -163,7 +164,7 @@ case "$ARCH" in
         case "$CPU_VENDOR" in
             GenuineIntel)
                 VULKAN_DRIVERS="virtio"
-                INTEL_EXPERIMENTAL="true"
+                INTEL_EXPERIMENTAL="false"
                 INTEL_RT="enabled"
                 # intel,virtio
                 ;;
@@ -295,6 +296,7 @@ EOF
     sudo apt install -y --no-upgrade --no-install-recommends libxdamage-dev:i386
     sudo apt install -y --no-upgrade --no-install-recommends libxcb-dri3-dev:i386
     sudo apt install -y --no-upgrade --no-install-recommends libudev-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libdisplay-info-dev:i386
 
 
     rm -rf build32 2>/dev/null
