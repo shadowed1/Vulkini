@@ -15,6 +15,23 @@ echo "${CYAN}Starting Vulkan install in 10 seconds... ${RESET}"
 echo
 sleep 8
 
+cleanup() {
+    echo
+    echo "${YELLOW}Exiting Crostini Vulkan setup...${RESET}"
+}
+trap cleanup EXIT
+
+read -rp "${MAGENTA}Do you want to build Mesa + Vulkan for Crostini? (y/yes to continue): ${RESET}" BUILD_CHOICE
+case "$BUILD_CHOICE" in
+    y|Y|yes|YES|Yes)
+        echo "${GREEN}Continuing setup...${RESET}"
+        ;;
+    *)
+        echo "${RED}Aborting setup.${RESET}"
+        exit 0
+        ;;
+esac
+
 sudo apt -o Acquire::ForceIPv4=true update
 echo
 echo "${BLUE}Adding ${BOLD}$USER${RESET}${BLUE} to groups to enable GPU acceleration: ${RESET}${CYAN}"
@@ -97,7 +114,7 @@ sudo apt install -y --no-upgrade --no-install-recommends libxcb-present-dev
 sudo apt install -y --no-upgrade --no-install-recommends libxshmfence-dev
 sudo apt install -y --no-upgrade --no-install-recommends libxxf86vm-dev
 sudo apt install -y --no-upgrade --no-install-recommends libxrandr-dev
-sudo apt install -y --no-upgrade --no-install-recommends libclc-19-dev
+sudo apt install -y libclc-19-dev
 sudo apt install -y --no-upgrade --no-install-recommends llvm-19-dev 
 sudo apt install -y --no-upgrade --no-install-recommends llvm-spirv-19
 sudo apt install -y --no-upgrade --no-install-recommends libllvmspirvlib-19-dev
@@ -106,7 +123,8 @@ sudo apt install -y --no-upgrade --no-install-recommends libclang-19-dev
 sudo apt install -y --no-upgrade --no-install-recommends llvm-19-dev 
 sudo apt install -y --no-upgrade --no-install-recommends llvm-spirv-19
 
-# sudo apt upgrade -y
+
+sudo apt -o Acquire::ForceIPv4=true upgrade -y
 
 cd
 rm -rf mesa-* 2>/dev/null
