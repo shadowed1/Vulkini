@@ -58,7 +58,7 @@ if [ "$(uname -m)" != "aarch64" ]; then
     sudo dpkg --add-architecture i386
         if ! command -v steam >/dev/null 2>&1; then
         echo
-        read -rp "${MAGENTA}Steam is not installed. Install Steam? (y/yes): ${RESET}" STEAM_CHOICE
+        read -rp "${CYAN}Steam is not installed. Install Steam? ${BOLD}(y/N)${RESET}${CYAN}: ${RESET}" STEAM_CHOICE
         echo
     
         case "$STEAM_CHOICE" in
