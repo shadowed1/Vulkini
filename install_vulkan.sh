@@ -15,7 +15,7 @@ echo "${CYAN}Starting Vulkan install in 10 seconds... ${RESET}"
 echo
 sleep 8
 
-sudo apt update
+sudo apt -o Acquire::ForceIPv4=true update
 echo
 echo "${BLUE}Adding ${BOLD}$USER${RESET}${BLUE} to groups to enable GPU acceleration: ${RESET}${CYAN}"
 echo
@@ -37,68 +37,74 @@ if [ "$(uname -m)" != "aarch64" ]; then
     sudo dpkg --add-architecture i386
 fi
 
-sudo apt update
-sudo apt install -y vulkan-tools
-sudo apt install -y libepoxy-dev
-sudo apt install -y libvulkan-dev
-sudo apt install -y python3-yaml
-sudo apt install -y git
-sudo apt install -y meson
-sudo apt install -y pkg-config
-sudo apt install -y libvulkan-dev
-sudo apt install -y libclang-dev
-sudo apt install -y tar
-sudo apt install -y zstd
-sudo apt install -y mesa-utils
-sudo apt install -y cmake
-sudo apt install -y pkg-config
-sudo apt install -y lua5.4
+sudo apt -o Acquire::ForceIPv4=true update
+sudo apt install -y --no-upgrade --no-install-recommends vulkan-tools
+sudo apt install -y --no-upgrade --no-install-recommends libepoxy-dev
+sudo apt install -y --no-upgrade --no-install-recommends libvulkan-dev
+sudo apt install -y --no-upgrade --no-install-recommends python3-yaml
+sudo apt install -y --no-upgrade --no-install-recommends git
+sudo apt install -y --no-upgrade --no-install-recommends meson
+sudo apt install -y --no-upgrade --no-install-recommends pkg-config
+sudo apt install -y --no-upgrade --no-install-recommends libvulkan-dev
+sudo apt install -y --no-upgrade --no-install-recommends libclang-dev
+sudo apt install -y --no-upgrade --no-install-recommends tar
+sudo apt install -y --no-upgrade --no-install-recommends zstd
+sudo apt install -y --no-upgrade --no-install-recommends mesa-utils
+sudo apt install -y --no-upgrade --no-install-recommends cmake
+sudo apt install -y --no-upgrade --no-install-recommends pkg-config
+sudo apt install -y --no-upgrade --no-install-recommends lua5.4
 
-# Stage 1
-sudo apt install -y liblua5.4-dev
-sudo apt install -y vulkan-validationlayers
-sudo apt install -y libunwind-dev
-sudo apt install -y hwdata
+sudo apt install -y --no-upgrade --no-install-recommends liblua5.4-dev
+sudo apt install -y --no-upgrade --no-install-recommends vulkan-validationlayers
+sudo apt install -y --no-upgrade --no-install-recommends libunwind-dev
+sudo apt install -y --no-upgrade --no-install-recommends hwdata
+
 sudo apt upgrade -y
-sudo apt install -y llvm
-sudo apt install -y llvm-dev
-sudo apt install -y clang
-sudo apt install -y libdisplay-info-dev
-sudo apt install -y valgrind
-sudo apt install -y libglvnd-dev
-sudo apt install -y glslang-tools
-sudo apt install -y libva-dev
-sudo apt install -y python3-mako
-sudo apt install -y zlib1g-dev
-sudo apt install -y libzstd-dev
-sudo apt install -y libexpat1-dev
-sudo apt install -y libdrm-dev
-sudo apt install -y byacc
-sudo apt install -y libudev-dev
-sudo apt install -y libelf-dev
-sudo apt install -y bison
-sudo apt install -y flex
-sudo apt install -y wayland-protocols
-sudo apt install -y libwayland-egl-backend-dev
-sudo apt install -y libxcb-randr0-dev
-sudo apt install -y libxext-dev
-sudo apt install -y libxcb-glx0-dev
-sudo apt install -y libxcb-shm0-dev
-sudo apt install -y libx11-xcb-dev
-sudo apt install -y libxcb-keysyms1-dev
-sudo apt install -y libxcb-dri3-dev
-sudo apt install -y libxcb-present-dev
-sudo apt install -y libxshmfence-dev
-sudo apt install -y libxxf86vm-dev
-sudo apt install -y libxrandr-dev
-sudo apt install -y libclc-19-dev
-sudo apt install -y llvm-19-dev 
-sudo apt install -y llvm-spirv-19
-sudo apt install -y libllvmspirvlib-19-dev
-sudo apt install -y clang-19 
-sudo apt install -y libclang-19-dev
-sudo apt install -y llvm-19-dev 
-sudo apt install -y llvm-spirv-19
+
+sudo apt install -y --no-upgrade --no-install-recommends llvm
+sudo apt install -y --no-upgrade --no-install-recommends llvm-dev
+sudo apt install -y --no-upgrade --no-install-recommends clang
+
+sudo apt install -y --no-upgrade --no-install-recommends libdisplay-info-dev
+sudo apt install -y --no-upgrade --no-install-recommends valgrind
+sudo apt install -y --no-upgrade --no-install-recommends libglvnd-dev
+
+sudo apt install -y --no-upgrade --no-install-recommends glslang-tools
+sudo apt install -y --no-upgrade --no-install-recommends libva-dev
+sudo apt install -y --no-upgrade --no-install-recommends python3-mako
+sudo apt install -y --no-upgrade --no-install-recommends zlib1g-dev
+sudo apt install -y --no-upgrade --no-install-recommends libzstd-dev
+sudo apt install -y --no-upgrade --no-install-recommends libexpat1-dev
+sudo apt install -y --no-upgrade --no-install-recommends libdrm-dev
+sudo apt install -y --no-upgrade --no-install-recommends byacc
+sudo apt install -y --no-upgrade --no-install-recommends libudev-dev
+sudo apt install -y --no-upgrade --no-install-recommends libelf-dev
+
+sudo apt install -y --no-upgrade --no-install-recommends bison
+sudo apt install -y --no-upgrade --no-install-recommends flex
+sudo apt install -y --no-upgrade --no-install-recommends wayland-protocols
+
+sudo apt install -y --no-upgrade --no-install-recommends libwayland-egl-backend-dev
+sudo apt install -y --no-upgrade --no-install-recommends libxcb-randr0-dev
+sudo apt install -y --no-upgrade --no-install-recommends libxext-dev
+sudo apt install -y --no-upgrade --no-install-recommends libxcb-glx0-dev
+sudo apt install -y --no-upgrade --no-install-recommends libxcb-shm0-dev
+sudo apt install -y --no-upgrade --no-install-recommends libx11-xcb-dev
+sudo apt install -y --no-upgrade --no-install-recommends libxcb-keysyms1-dev
+sudo apt install -y --no-upgrade --no-install-recommends libxcb-dri3-dev
+sudo apt install -y --no-upgrade --no-install-recommends libxcb-present-dev
+sudo apt install -y --no-upgrade --no-install-recommends libxshmfence-dev
+sudo apt install -y --no-upgrade --no-install-recommends libxxf86vm-dev
+sudo apt install -y --no-upgrade --no-install-recommends libxrandr-dev
+sudo apt install -y --no-upgrade --no-install-recommends libclc-19-dev
+sudo apt install -y --no-upgrade --no-install-recommends llvm-19-dev 
+sudo apt install -y --no-upgrade --no-install-recommends llvm-spirv-19
+sudo apt install -y --no-upgrade --no-install-recommends libllvmspirvlib-19-dev
+sudo apt install -y --no-upgrade --no-install-recommends clang-19 
+sudo apt install -y --no-upgrade --no-install-recommends libclang-19-dev
+sudo apt install -y --no-upgrade --no-install-recommends llvm-19-dev 
+sudo apt install -y --no-upgrade --no-install-recommends llvm-spirv-19
+
 sudo apt upgrade -y
 
 cd
@@ -202,45 +208,45 @@ EOF
 
     sudo apt update
     sudo apt upgrade -y
-    sudo apt install -y gcc-multilib
-    sudo apt install -y g++-multilib
-    sudo apt install -y pkg-config:i386
-    sudo apt install -y libdrm-dev:i386
-    sudo apt install -y libwayland-dev:i386
-    sudo apt install -y libwayland-egl-backend-dev:i386
-    sudo apt install -y libxext-dev:i386
-    sudo apt install -y libxfixes-dev:i386
-    sudo apt install -y x11proto-dev:i386
-    sudo apt install -y libxcb-glx0-dev:i386
-    sudo apt install -y libxcb-shm0-dev:i386
-    sudo apt install -y libx11-xcb-dev:i386
-    sudo apt install -y libxcb-dri2-0-dev:i386
-    sudo apt install -y libxcb-dri3-dev:i386
-    sudo apt install -y libxcb-present-dev:i386
-    sudo apt install -y libxshmfence-dev:i386
-    sudo apt install -y libxxf86vm-dev:i386
-    sudo apt install -y libxrandr-dev:i386
-    sudo apt install -y libunwind-dev:i386
-    sudo apt install -y libelf-dev:i386
-    sudo apt install -y libzstd-dev:i386
-    sudo apt install -y libbsd-dev:i386
-    sudo apt install -y libsensors-dev:i386
-    sudo apt install -y libxcb-keysyms1-dev:i386
-    sudo apt install -y libva-dev:i386
-    sudo apt install -y libxshmfence-dev:i386
-    sudo apt install -y libvulkan-dev:i386
-    sudo apt install -y libglvnd-dev:i386
-    sudo apt install -y libexpat1-dev:i386
-    sudo apt install -y zlib1g-dev:i386
-    sudo apt install -y libx11-dev:i386
-    sudo apt install -y libxcb-randr0-dev:i386
-    sudo apt install -y libxcb-dri2-0-dev:i386
-    sudo apt install -y libxfixes-dev:i386
-    sudo apt install -y libxcb1-dev:i386
-    sudo apt install -y libxcb-sync-dev:i386
-    sudo apt install -y libxcb-xfixes0-dev:i386
-    sudo apt install -y libxdamage-dev:i386
-    sudo apt install -y libxcb-dri3-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends gcc-multilib
+    sudo apt install -y --no-upgrade --no-install-recommends g++-multilib
+    sudo apt install -y --no-upgrade --no-install-recommends pkg-config:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libdrm-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libwayland-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libwayland-egl-backend-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libxext-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libxfixes-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends x11proto-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libxcb-glx0-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libxcb-shm0-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libx11-xcb-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libxcb-dri2-0-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libxcb-dri3-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libxcb-present-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libxshmfence-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libxxf86vm-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libxrandr-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libunwind-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libelf-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libzstd-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libbsd-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libsensors-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libxcb-keysyms1-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libva-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libxshmfence-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libvulkan-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libglvnd-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libexpat1-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends zlib1g-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libx11-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libxcb-randr0-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libxcb-dri2-0-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libxfixes-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libxcb1-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libxcb-sync-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libxcb-xfixes0-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libxdamage-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libxcb-dri3-dev:i386
     sudo apt upgrade -y
 
     rm -rf build32 2>/dev/null
