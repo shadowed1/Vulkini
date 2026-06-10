@@ -282,6 +282,7 @@ EOF
     rm -rf build32 2>/dev/null
 
     # sudo mkdir -p /opt/mesa
+    rm -rf build32 2>/dev/null
     meson setup build32 \
         --cross-file ~/.local/share/meson/cross/i686-cross.ini \
         --wrap-mode=nofallback \
