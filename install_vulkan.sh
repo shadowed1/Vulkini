@@ -58,13 +58,14 @@ if [ "$(uname -m)" != "aarch64" ]; then
     sudo dpkg --add-architecture i386
         if ! command -v steam >/dev/null 2>&1; then
         echo
-        read -rp "${CYAN}Steam is not installed. Install Steam? ${BOLD}(y/N)${RESET}${CYAN}: ${RESET}" STEAM_CHOICE
+        read -rp "${MAGENTA}Steam is not installed. Install Steam? ${BOLD}(y/N)${RESET}${MAGENTA}: " STEAM_CHOICE
         echo
     
         case "$STEAM_CHOICE" in
             y|Y|yes|YES|Yes)
                 sudo apt -o Acquire::ForceIPv4=true update
                 sudo apt install -y vulkan-tools mesa-utils vulkan-validationlayers steam-installer
+                echo "${RESET}"
                 ;;
             *)
                 echo
