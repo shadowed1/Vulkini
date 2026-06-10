@@ -125,8 +125,8 @@ sudo apt install -y --no-upgrade --no-install-recommends clang-19
 sudo apt install -y --no-upgrade --no-install-recommends libclang-19-dev
 sudo apt install -y --no-upgrade --no-install-recommends llvm-19-dev 
 sudo apt install -y --no-upgrade --no-install-recommends llvm-spirv-19
-sudo apt install -y --no-upgrade --no-install-recommends rust-bindgen
-#curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+sudo apt install -y --no-upgrade --no-install-recommends bindgen
 
 
 # sudo apt -o Acquire::ForceIPv4=true upgrade -y
