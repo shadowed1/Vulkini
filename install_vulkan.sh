@@ -294,6 +294,8 @@ EOF
     sudo apt install -y --no-upgrade --no-install-recommends libxcb-xfixes0-dev:i386
     sudo apt install -y --no-upgrade --no-install-recommends libxdamage-dev:i386
     sudo apt install -y --no-upgrade --no-install-recommends libxcb-dri3-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libudev-dev:i386
+
 
     rm -rf build32 2>/dev/null
     meson setup build32 \
