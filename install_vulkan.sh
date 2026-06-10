@@ -122,6 +122,7 @@ sudo apt install -y --no-upgrade --no-install-recommends clang-19
 sudo apt install -y --no-upgrade --no-install-recommends libclang-19-dev
 sudo apt install -y --no-upgrade --no-install-recommends llvm-19-dev 
 sudo apt install -y --no-upgrade --no-install-recommends llvm-spirv-19
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
 
 # sudo apt -o Acquire::ForceIPv4=true upgrade -y
@@ -185,7 +186,7 @@ meson setup build64 \
     -Dgles1=enabled \
     -Dgles2=enabled \
     -Dspirv-tools=enabled \
-    -Dgallium-rusticl=false \
+    -Dgallium-rusticl=true \
     -Dvideo-codecs=all \
     -Dgallium-d3d12-video=enabled \
     -Dgallium-d3d12-graphics=enabled \
