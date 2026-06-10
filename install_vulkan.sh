@@ -304,7 +304,6 @@ EOF
         -Dplatforms=x11,wayland \
         -Dvulkan-drivers=virtio \
         -Dintel-virtio-experimental="$INTEL_EXPERIMENTAL" \
-        -Dintel-rt="$INTEL_RT" \
         -Dgallium-drivers=virgl,zink \
         -Dmesa-clc=enabled \
         -Dinstall-mesa-clc=true \
