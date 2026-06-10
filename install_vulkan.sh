@@ -152,11 +152,11 @@ case "$ARCH" in
         ;;
 esac
 
-sudo mkdir -p /opt/mesa
+# sudo mkdir -p /opt/mesa
 meson setup build64 \
     --libdir "$LIBDIR" \
     --wrap-mode=nofallback \
-    -Dprefix=/opt/mesa \
+    -Dprefix=/usr \
     -Dplatforms=x11,wayland \
     -Dvulkan-drivers="$VULKAN_DRIVERS" \
     -Dgallium-drivers=virgl,zink \
@@ -251,11 +251,11 @@ EOF
 
     rm -rf build32 2>/dev/null
 
-    sudo mkdir -p /opt/mesa
+    # sudo mkdir -p /opt/mesa
     meson setup build32 \
         --cross-file ~/.local/share/meson/cross/i686-cross.ini \
         --wrap-mode=nofallback \
-        -Dprefix=/opt/mesa \
+        -Dprefix=/usr \
         -Dlibdir=lib/i386-linux-gnu \
         -Dplatforms=x11,wayland \
         -Dvulkan-drivers=virtio \
