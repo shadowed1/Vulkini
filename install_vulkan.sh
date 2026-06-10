@@ -280,6 +280,6 @@ EOF
 fi
 
 rm -rf mesa-* 2>/dev/null
-vulkaninfo --summary
 sudo apt --fix-broken install -y
-
+echo
+vulkaninfo --summary
