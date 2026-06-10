@@ -136,6 +136,7 @@ sudo apt install -y --no-upgrade --no-install-recommends clang-19
 sudo apt install -y --no-upgrade --no-install-recommends libclang-19-dev
 sudo apt install -y --no-upgrade --no-install-recommends llvm-19-dev 
 sudo apt install -y --no-upgrade --no-install-recommends llvm-spirv-19
+sudo apt install -y --no-upgrade --no-install-recommends  libxfixes-dev
 
 cd
 rm -rf mesa-* 2>/dev/null
@@ -189,7 +190,6 @@ meson setup build64 \
     -Dgbm=enabled \
     -Dgles1=enabled \
     -Dgles2=enabled \
-    -Dspirv-tools=enabled \
     -Dgallium-rusticl=false \
     -Dvideo-codecs=all \
     -Dgallium-d3d12-video=enabled \
@@ -288,7 +288,6 @@ EOF
         -Dgles2=enabled \
         -Dllvm=disabled \
         -Dmesa-clc=system \
-        -Dspirv-tools=disabled \
         -Dgallium-rusticl=false \
         -Dvideo-codecs=all \
         -Dgallium-d3d12-video=enabled \
