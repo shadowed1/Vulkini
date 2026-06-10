@@ -276,42 +276,10 @@ EOF
         -Dvalgrind=disabled
 
     sudo ninja -C build32 install
+    sudo rm /usr/share/drirc.d/00-mesa-defaults.conf 2>/dev/null
 fi
 
 rm -rf mesa-* 2>/dev/null
 vulkaninfo --summary
-echo
-echo "${GREEN}Drivers installed to ${BOLD}/opt/mesa${RESET}"
-echo
-
-MESA_PREFIX="/opt/mesa"
-TARGET_FILE="$HOME/.bashrc"
-
-arch="$(uname -m)"
-
-if [ "$arch" = "x86_64" ]; then
-    MESA_LIBDIR="$MESA_PREFIX/lib/x86_64-linux-gnu"
-    ICD_GLOB=$(ls "$MESA_PREFIX/share/vulkan/icd.d/"*.x86_64.json 2>/dev/null | tr '\n' ':')
-else
-    MESA_LIBDIR="$MESA_PREFIX/lib/aarch64-linux-gnu"
-    ICD_GLOB=$(ls "$MESA_PREFIX/share/vulkan/icd.d/"*.aarch64.json 2>/dev/null | tr '\n' ':')
-fi
-
-ICD_GLOB=${ICD_GLOB%:}
-
-TMP_FILE="$(mktemp)"
-
-sed '/^# <<< MESA VENUS MARKER <<</,/^# <<< END MESA VENUS MARKER <<</d' \
-    "$TARGET_FILE" > "$TMP_FILE"
-
-cat >> "$TMP_FILE" <<EOF
-
-# <<< MESA VENUS MARKER <<<
-export LD_LIBRARY_PATH="$MESA_LIBDIR:\${LD_LIBRARY_PATH}"
-export VK_ICD_FILENAMES="$ICD_GLOB"
-# <<< END MESA VENUS MARKER <<<
-EOF
-
-mv "$TMP_FILE" "$TARGET_FILE"
-
+sudo apt --fix-broken install -y
 
