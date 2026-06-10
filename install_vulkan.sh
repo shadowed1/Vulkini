@@ -21,12 +21,14 @@ cleanup() {
 }
 trap cleanup EXIT
 
-read -rp "${MAGENTA}Do you want to build Mesa + Vulkan for Crostini? (y/yes to continue): ${RESET}" BUILD_CHOICE
+read -rp "${CYAN}Do you want to build Mesa + Vulkan for Crostini? ${BOLD}(y/N)${RESET}${CYAN}: ${RESET}" BUILD_CHOICE
 case "$BUILD_CHOICE" in
     y|Y|yes|YES|Yes)
+        echo
         echo "${GREEN}Continuing setup...${RESET}"
         ;;
     *)
+        echo
         echo "${RED}Aborting setup.${RESET}"
         exit 0
         ;;
