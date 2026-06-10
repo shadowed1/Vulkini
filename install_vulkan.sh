@@ -23,11 +23,14 @@ read -rp "${CYAN}Do you want to build Mesa + Vulkan for Crostini? ${BOLD}(y/N)${
 case "$BUILD_CHOICE" in
     y|Y|yes|YES|Yes)
         echo
-        echo "${GREEN}Continuing setup...${RESET}"
+        echo "${GREEN}Proceeding to installation...${RESET}"
+        sleep 1
+        echo
         ;;
     *)
         echo
-        echo "${RED}Aborting setup.${RESET}"
+        echo "${RED}Exiting setup.${RESET}"
+        sleep 2
         exit 0
         ;;
 esac
