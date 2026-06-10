@@ -59,7 +59,7 @@ sudo apt install -y --no-upgrade --no-install-recommends vulkan-validationlayers
 sudo apt install -y --no-upgrade --no-install-recommends libunwind-dev
 sudo apt install -y --no-upgrade --no-install-recommends hwdata
 
-sudo apt upgrade -y
+# sudo apt upgrade -y
 
 sudo apt install -y --no-upgrade --no-install-recommends llvm
 sudo apt install -y --no-upgrade --no-install-recommends llvm-dev
@@ -105,7 +105,7 @@ sudo apt install -y --no-upgrade --no-install-recommends libclang-19-dev
 sudo apt install -y --no-upgrade --no-install-recommends llvm-19-dev 
 sudo apt install -y --no-upgrade --no-install-recommends llvm-spirv-19
 
-sudo apt upgrade -y
+# sudo apt upgrade -y
 
 cd
 rm -rf mesa-* 2>/dev/null
@@ -207,7 +207,7 @@ endian = 'little'
 EOF
 
     sudo apt update
-    sudo apt upgrade -y
+    # sudo apt upgrade -y
     sudo apt install -y --no-upgrade --no-install-recommends gcc-multilib
     sudo apt install -y --no-upgrade --no-install-recommends g++-multilib
     sudo apt install -y --no-upgrade --no-install-recommends pkg-config:i386
@@ -247,7 +247,7 @@ EOF
     sudo apt install -y --no-upgrade --no-install-recommends libxcb-xfixes0-dev:i386
     sudo apt install -y --no-upgrade --no-install-recommends libxdamage-dev:i386
     sudo apt install -y --no-upgrade --no-install-recommends libxcb-dri3-dev:i386
-    sudo apt upgrade -y
+    # sudo apt upgrade -y
 
     rm -rf build32 2>/dev/null
 
