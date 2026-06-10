@@ -124,7 +124,7 @@ sudo apt install -y --no-upgrade --no-install-recommends llvm-19-dev
 sudo apt install -y --no-upgrade --no-install-recommends llvm-spirv-19
 
 
-sudo apt -o Acquire::ForceIPv4=true upgrade -y
+# sudo apt -o Acquire::ForceIPv4=true upgrade -y
 
 cd
 rm -rf mesa-* 2>/dev/null
