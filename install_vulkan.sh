@@ -63,7 +63,8 @@ if [ "$(uname -m)" != "aarch64" ]; then
     
         case "$STEAM_CHOICE" in
             y|Y|yes|YES|Yes)
-                sudo apt install -y steam-installer
+                sudo apt update 
+                sudo apt install -y vulkan-tools mesa-utils vulkan-validationlayers steam-installer
                 ;;
             *)
                 echo
