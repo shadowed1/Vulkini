@@ -53,6 +53,8 @@ sudo apt install -y mesa-utils
 sudo apt install -y cmake
 sudo apt install -y pkg-config
 sudo apt install -y lua5.4
+
+# Stage 1
 sudo apt install -y liblua5.4-dev
 sudo apt install -y vulkan-validationlayers
 sudo apt install -y libunwind-dev
