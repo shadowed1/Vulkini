@@ -56,6 +56,22 @@ EOF
 
 if [ "$(uname -m)" != "aarch64" ]; then
     sudo dpkg --add-architecture i386
+        if ! command -v steam >/dev/null 2>&1; then
+        echo
+        read -rp "${MAGENTA}Steam is not installed. Install Steam? (y/yes): ${RESET}" STEAM_CHOICE
+        echo
+    
+        case "$STEAM_CHOICE" in
+            y|Y|yes|YES|Yes)
+                sudo apt install -y steam-installer
+                ;;
+            *)
+                echo
+                echo "${YELLOW}Skipping Steam installation.${RESET}"
+                echo
+                ;;
+        esac
+    fi
 fi
 
 sudo apt -o Acquire::ForceIPv4=true update
