@@ -150,21 +150,25 @@ case "$ARCH" in
         case "$CPU_VENDOR" in
             GenuineIntel)
                 VULKAN_DRIVERS="virtio"
+                INTEL_EXPERIMENTAL="true"
                 # intel,virtio
                 ;;
             AuthenticAMD)
                 VULKAN_DRIVERS="virtio"
+                INTEL_EXPERIMENTAL="false"
                 # amd,virtio
                 ;;
             *)
                 echo "${YELLOW}Unknown x86 CPU vendor: $CPU_VENDOR. Defaulting to virtio.${RESET}"
                 VULKAN_DRIVERS="virtio"
+                INTEL_EXPERIMENTAL="false"
                 ;;
         esac
         ;;
     aarch64)
         LIBDIR="lib/aarch64-linux-gnu"
         VULKAN_DRIVERS="virtio"
+        INTEL_EXPERIMENTAL="false"
         ;;
     *)
         echo "${RED}Unsupported arch: $ARCH ${RESET}"
@@ -180,7 +184,10 @@ meson setup build64 \
     -Dprefix=/usr \
     -Dplatforms=x11,wayland \
     -Dvulkan-drivers="$VULKAN_DRIVERS" \
+    -Dintel-virtio-experimental="$INTEL_EXPERIMENTAL" \
     -Dgallium-drivers=virgl,zink \
+    -Dmesa-clc=enabled \
+    -Dinstall-mesa-clc=true \
     -Dglx=dri \
     -Degl=enabled \
     -Dgbm=enabled \
@@ -280,7 +287,10 @@ EOF
         -Dlibdir=lib/i386-linux-gnu \
         -Dplatforms=x11,wayland \
         -Dvulkan-drivers=virtio \
+        -Dintel-virtio-experimental="$INTEL_EXPERIMENTAL" \
         -Dgallium-drivers=virgl,zink \
+        -Dmesa-clc=enabled \
+        -Dinstall-mesa-clc=true \
         -Dglx=dri \
         -Degl=enabled \
         -Dgbm=enabled \
@@ -289,7 +299,7 @@ EOF
         -Dllvm=disabled \
         -Dmesa-clc=system \
         -Dspirv-tools=disabled \
-        -Dgallium-rusticl=false \
+        -Dgallium-rusticl=true \
         -Dvideo-codecs=all \
         -Dgallium-d3d12-video=enabled \
         -Dgallium-d3d12-graphics=enabled \
