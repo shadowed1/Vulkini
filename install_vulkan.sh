@@ -117,7 +117,7 @@ sudo apt install -y --no-upgrade --no-install-recommends clang-19
 sudo apt install -y --no-upgrade --no-install-recommends libclang-19-dev
 sudo apt install -y --no-upgrade --no-install-recommends llvm-19-dev 
 sudo apt install -y --no-upgrade --no-install-recommends llvm-spirv-19
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+#curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 sudo apt install -y --no-upgrade --no-install-recommends bindgen
 
 
@@ -146,17 +146,20 @@ case "$ARCH" in
             GenuineIntel)
                 VULKAN_DRIVERS="virtio"
                 INTEL_EXPERIMENTAL="true"
+                INTEL_RT="enabled"
                 # intel,virtio
                 ;;
             AuthenticAMD)
                 VULKAN_DRIVERS="virtio"
                 INTEL_EXPERIMENTAL="false"
+                INTEL_RT="disabled"
                 # amd,virtio
                 ;;
             *)
                 echo "${YELLOW}Unknown x86 CPU vendor: $CPU_VENDOR. Defaulting to virtio.${RESET}"
                 VULKAN_DRIVERS="virtio"
                 INTEL_EXPERIMENTAL="false"
+                INTEL_RT="disabled"
                 ;;
         esac
         ;;
@@ -164,6 +167,7 @@ case "$ARCH" in
         LIBDIR="lib/aarch64-linux-gnu"
         VULKAN_DRIVERS="virtio"
         INTEL_EXPERIMENTAL="false"
+        INTEL_RT="disabled"
         ;;
     *)
         echo "${RED}Unsupported arch: $ARCH ${RESET}"
@@ -173,13 +177,16 @@ case "$ARCH" in
 esac
 
 # sudo mkdir -p /opt/mesa
+rm -rf build 64 2>/dev/null
 meson setup build64 \
     --libdir "$LIBDIR" \
     --wrap-mode=nofallback \
     -Dprefix=/usr \
+    -Dgallium-d3d12-graphics=enabled \
     -Dplatforms=x11,wayland \
     -Dvulkan-drivers="$VULKAN_DRIVERS" \
     -Dintel-virtio-experimental="$INTEL_EXPERIMENTAL" \
+    -Dintel-rt="$INTEL_RT" \
     -Dgallium-drivers=virgl,zink \
     -Dmesa-clc=enabled \
     -Dinstall-mesa-clc=true \
@@ -189,7 +196,7 @@ meson setup build64 \
     -Dgles1=enabled \
     -Dgles2=enabled \
     -Dspirv-tools=enabled \
-    -Dgallium-rusticl=true \
+    -Dgallium-rusticl=false \
     -Dvideo-codecs=all \
     -Dgallium-d3d12-video=enabled \
     -Dgallium-d3d12-graphics=enabled \
@@ -283,6 +290,7 @@ EOF
         -Dplatforms=x11,wayland \
         -Dvulkan-drivers=virtio \
         -Dintel-virtio-experimental="$INTEL_EXPERIMENTAL" \
+        -Dintel-rt="$INTEL_RT" \
         -Dgallium-drivers=virgl,zink \
         -Dmesa-clc=enabled \
         -Dinstall-mesa-clc=true \
@@ -294,7 +302,7 @@ EOF
         -Dllvm=disabled \
         -Dmesa-clc=system \
         -Dspirv-tools=disabled \
-        -Dgallium-rusticl=true \
+        -Dgallium-rusticl=false \
         -Dvideo-codecs=all \
         -Dgallium-d3d12-video=enabled \
         -Dgallium-d3d12-graphics=enabled \
