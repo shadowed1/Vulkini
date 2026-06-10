@@ -141,15 +141,17 @@ sudo apt install -y --no-upgrade --no-install-recommends bindgen
 
 cd
 rm -rf mesa-* 2>/dev/null
-LATEST=$(curl -s https://archive.mesa3d.org/ \
-  | grep -oE 'mesa-[0-9]+\.[0-9]+\.[0-9]+\.tar\.xz' \
-  | grep -v 'rc' \
-  | sort -V \
-  | tail -n1)
-wget "https://archive.mesa3d.org/$LATEST"
-tar xf "$LATEST"
-cd "${LATEST%.tar.xz}"
-rm -rf build64 2>/dev/null
+#LATEST=$(curl -s https://archive.mesa3d.org/ \
+#  | grep -oE 'mesa-[0-9]+\.[0-9]+\.[0-9]+\.tar\.xz' \
+#  | grep -v 'rc' \
+#  | sort -V \
+#  | tail -n1)
+#wget "https://archive.mesa3d.org/$LATEST"
+#tar xf "$LATEST"
+#cd "${LATEST%.tar.xz}"
+wget "https://archive.mesa3d.org/mesa-26.1.2.tar.xz"
+tar xf "mesa-26.1.2.tar.xz"
+cd mesa-26.1.2
 ARCH="$(uname -m)"
 
 case "$ARCH" in
@@ -192,7 +194,6 @@ case "$ARCH" in
         ;;
 esac
 
-# sudo mkdir -p /opt/mesa
 rm -rf build 64 2>/dev/null
 meson setup build64 \
     --libdir "$LIBDIR" \
@@ -293,11 +294,7 @@ EOF
     sudo apt install -y --no-upgrade --no-install-recommends libxcb-xfixes0-dev:i386
     sudo apt install -y --no-upgrade --no-install-recommends libxdamage-dev:i386
     sudo apt install -y --no-upgrade --no-install-recommends libxcb-dri3-dev:i386
-    # sudo apt upgrade -y
 
-    rm -rf build32 2>/dev/null
-
-    # sudo mkdir -p /opt/mesa
     rm -rf build32 2>/dev/null
     meson setup build32 \
         --cross-file ~/.local/share/meson/cross/i686-cross.ini \
