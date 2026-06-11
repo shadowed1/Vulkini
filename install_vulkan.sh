@@ -165,7 +165,7 @@ case "$ARCH" in
         case "$CPU_VENDOR" in
             GenuineIntel)
                 VULKAN_DRIVERS="virtio"
-                INTEL_EXPERIMENTAL="false"
+                INTEL_EXPERIMENTAL="true"
                 INTEL_RT="enabled"
                 # intel,virtio
                 ;;
