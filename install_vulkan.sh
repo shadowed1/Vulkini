@@ -57,14 +57,13 @@ if [ "$(uname -m)" != "aarch64" ]; then
     sudo dpkg --add-architecture i386
         if ! command -v steam >/dev/null 2>&1; then
         echo
-        read -rp "${MAGENTA}Steam is not installed. Install Steam? ${BOLD}(y/N)${RESET}${MAGENTA}: " STEAM_CHOICE
+        read -rp "${CYAN}Steam is not installed. Install Steam? ${BOLD}(y/N)${RESET}${CYAN}: ${RESET}" STEAM_CHOICE
         echo
     
         case "$STEAM_CHOICE" in
             y|Y|yes|YES|Yes)
-                sudo apt update
-                sudo apt install -y --no-upgrade --no-install-recommends steam-installer
-                echo "${RESET}"
+                sudo apt -o Acquire::ForceIPv4=true update
+                sudo apt install -y vulkan-tools mesa-utils vulkan-validationlayers steam-installer
                 ;;
             *)
                 echo
@@ -76,7 +75,8 @@ if [ "$(uname -m)" != "aarch64" ]; then
 fi
 
 echo "${BLUE}"
-sudo apt update
+sudo apt -o Acquire::ForceIPv4=true update
+sudo apt upgrade -y
 sudo apt install -y --no-upgrade --no-install-recommends vulkan-tools
 sudo apt install -y --no-upgrade --no-install-recommends libepoxy-dev
 sudo apt install -y --no-upgrade --no-install-recommends libvulkan-dev
@@ -135,14 +135,25 @@ sudo apt install -y --no-upgrade --no-install-recommends clang-19
 sudo apt install -y --no-upgrade --no-install-recommends libclang-19-dev
 sudo apt install -y --no-upgrade --no-install-recommends llvm-19-dev 
 sudo apt install -y --no-upgrade --no-install-recommends llvm-spirv-19
-sudo apt install -y --no-upgrade --no-install-recommends  libxfixes-dev
+#curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+sudo apt install -y --no-upgrade --no-install-recommends bindgen
+echo "${RESET}"
+
+# sudo apt -o Acquire::ForceIPv4=true upgrade -y
 
 cd
 rm -rf mesa-* 2>/dev/null
-wget "https://archive.mesa3d.org/mesa-25.0.3.tar.xz"
-tar xf "mesa-25.0.3.tar.xz"
-cd mesa-25.0.3
-rm -rf build64 2>/dev/null
+#LATEST=$(curl -s https://archive.mesa3d.org/ \
+#  | grep -oE 'mesa-[0-9]+\.[0-9]+\.[0-9]+\.tar\.xz' \
+#  | grep -v 'rc' \
+#  | sort -V \
+#  | tail -n1)
+#wget "https://archive.mesa3d.org/$LATEST"
+#tar xf "$LATEST"
+#cd "${LATEST%.tar.xz}"
+wget "https://archive.mesa3d.org/mesa-26.1.2.tar.xz"
+tar xf "mesa-26.1.2.tar.xz"
+cd mesa-26.1.2
 ARCH="$(uname -m)"
 
 case "$ARCH" in
@@ -154,21 +165,29 @@ case "$ARCH" in
         case "$CPU_VENDOR" in
             GenuineIntel)
                 VULKAN_DRIVERS="virtio"
+                INTEL_EXPERIMENTAL="false"
+                INTEL_RT="enabled"
                 # intel,virtio
                 ;;
             AuthenticAMD)
                 VULKAN_DRIVERS="virtio"
+                INTEL_EXPERIMENTAL="false"
+                INTEL_RT="disabled"
                 # amd,virtio
                 ;;
             *)
                 echo "${YELLOW}Unknown x86 CPU vendor: $CPU_VENDOR. Defaulting to virtio.${RESET}"
                 VULKAN_DRIVERS="virtio"
+                INTEL_EXPERIMENTAL="false"
+                INTEL_RT="disabled"
                 ;;
         esac
         ;;
     aarch64)
         LIBDIR="lib/aarch64-linux-gnu"
         VULKAN_DRIVERS="virtio"
+        INTEL_EXPERIMENTAL="false"
+        INTEL_RT="disabled"
         ;;
     *)
         echo "${RED}Unsupported arch: $ARCH ${RESET}"
@@ -177,18 +196,25 @@ case "$ARCH" in
         ;;
 esac
 
+rm -rf build 64 2>/dev/null
 meson setup build64 \
     --libdir "$LIBDIR" \
     --wrap-mode=nofallback \
     -Dprefix=/usr \
+    -Dgallium-d3d12-graphics=enabled \
     -Dplatforms=x11,wayland \
     -Dvulkan-drivers="$VULKAN_DRIVERS" \
+    -Dintel-virtio-experimental="$INTEL_EXPERIMENTAL" \
+    -Dintel-rt="$INTEL_RT" \
     -Dgallium-drivers=virgl,zink \
+    -Dmesa-clc=enabled \
+    -Dinstall-mesa-clc=true \
     -Dglx=dri \
     -Degl=enabled \
     -Dgbm=enabled \
     -Dgles1=enabled \
     -Dgles2=enabled \
+    -Dspirv-tools=enabled \
     -Dgallium-rusticl=false \
     -Dvideo-codecs=all \
     -Dgallium-d3d12-video=enabled \
@@ -229,7 +255,8 @@ cpu = 'i686'
 endian = 'little'
 EOF
 
-    sudo apt update
+    sudo apt --fix-broken install -y
+    sudo apt -o Acquire::ForceIPv4=true update
     sudo apt install -y --no-upgrade --no-install-recommends gcc-multilib
     sudo apt install -y --no-upgrade --no-install-recommends g++-multilib
     sudo apt install -y --no-upgrade --no-install-recommends pkg-config:i386
@@ -269,9 +296,11 @@ EOF
     sudo apt install -y --no-upgrade --no-install-recommends libxcb-xfixes0-dev:i386
     sudo apt install -y --no-upgrade --no-install-recommends libxdamage-dev:i386
     sudo apt install -y --no-upgrade --no-install-recommends libxcb-dri3-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libudev-dev:i386
+    sudo apt install -y --no-upgrade --no-install-recommends libdisplay-info-dev:i386
+
 
     rm -rf build32 2>/dev/null
-
     meson setup build32 \
         --cross-file ~/.local/share/meson/cross/i686-cross.ini \
         --wrap-mode=nofallback \
@@ -279,7 +308,10 @@ EOF
         -Dlibdir=lib/i386-linux-gnu \
         -Dplatforms=x11,wayland \
         -Dvulkan-drivers=virtio \
+        -Dintel-virtio-experimental="$INTEL_EXPERIMENTAL" \
         -Dgallium-drivers=virgl,zink \
+        -Dmesa-clc=enabled \
+        -Dinstall-mesa-clc=true \
         -Dglx=dri \
         -Degl=enabled \
         -Dgbm=enabled \
@@ -287,6 +319,7 @@ EOF
         -Dgles2=enabled \
         -Dllvm=disabled \
         -Dmesa-clc=system \
+        -Dspirv-tools=disabled \
         -Dgallium-rusticl=false \
         -Dvideo-codecs=all \
         -Dgallium-d3d12-video=enabled \
@@ -294,45 +327,16 @@ EOF
         -Dvalgrind=disabled
 
     sudo ninja -C build32 install
+    sudo rm /usr/share/drirc.d/00-mesa-defaults.conf 2>/dev/null
 fi
 
 rm -rf mesa-* 2>/dev/null
+sudo apt --fix-broken install -y
+echo
 
 sudo curl -fsSL "https://raw.githubusercontent.com/shadowed1/Chard/main/bin/vulkan_tester.sh" -o "/bin/vulkan_tester" 2>/dev/null
 sleep 0.2
 sudo chmod +x /bin/vulkan_tester 2>/dev/null
-
-MESA_PREFIX="/usr"
-TARGET_FILE="$HOME/.bashrc"
-
-arch="$(uname -m)"
-
-if [ "$arch" = "x86_64" ]; then
-    MESA_LIBDIR="$MESA_PREFIX/lib/x86_64-linux-gnu"
-    ICD_GLOB=$(ls "$MESA_PREFIX/share/vulkan/icd.d/"*.x86_64.json 2>/dev/null | tr '\n' ':')
-else
-    MESA_LIBDIR="$MESA_PREFIX/lib/aarch64-linux-gnu"
-    ICD_GLOB=$(ls "$MESA_PREFIX/share/vulkan/icd.d/"*.aarch64.json 2>/dev/null | tr '\n' ':')
-fi
-
-ICD_GLOB=${ICD_GLOB%:}
-
-TMP_FILE="$(mktemp)"
-
-sed '/^# <<< MESA VENUS MARKER <<</,/^# <<< END MESA VENUS MARKER <<</d' \
-    "$TARGET_FILE" > "$TMP_FILE"
-
-cat >> "$TMP_FILE" <<EOF
-
-# <<< MESA VENUS MARKER <<<
-export LD_LIBRARY_PATH="$MESA_LIBDIR:\${LD_LIBRARY_PATH}"
-export VK_ICD_FILENAMES="$ICD_GLOB"
-# <<< END MESA VENUS MARKER <<<
-EOF
-
-mv "$TMP_FILE" "$TARGET_FILE"
-
-export LD_LIBRARY_PATH="$MESA_LIBDIR:${LD_LIBRARY_PATH}"
-export VK_ICD_FILENAMES="$ICD_GLOB"
-
 vulkan_tester 2>/dev/null
+
+echo "${RESET}"
