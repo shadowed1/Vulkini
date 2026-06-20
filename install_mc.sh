@@ -77,6 +77,7 @@ fi
 echo "${BLUE}"
 sudo apt -o Acquire::ForceIPv4=true update
 echo "${RESET}"
+sudo apt install -y vulkan-tools mesa-utils vulkan-validationlayers
 sudo apt install flatpak -y
 flatpak --user remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 flatpak install flathub org.prismlauncher.PrismLauncher -y
