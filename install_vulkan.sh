@@ -19,7 +19,7 @@ cleanup() {
 }
 trap cleanup EXIT
 
-read -rp "${CYAN}Do you want to Install Steam + Prismlauncher for Crostini? ${BOLD}(y/N)${RESET}${CYAN}: ${RESET}" BUILD_CHOICE
+read -rp "${CYAN}Enable GPU Acceleration for Crostini? ${BOLD}(y/N)${RESET}${CYAN}: ${RESET}" BUILD_CHOICE
 case "$BUILD_CHOICE" in
     y|Y|yes|YES|Yes)
         echo
