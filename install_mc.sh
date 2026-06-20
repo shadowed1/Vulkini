@@ -63,7 +63,7 @@ if [ "$(uname -m)" != "aarch64" ]; then
         case "$STEAM_CHOICE" in
             y|Y|yes|YES|Yes)
                 sudo apt -o Acquire::ForceIPv4=true update
-                sudo apt install -y vulkan-tools mesa-utils vulkan-validationlayers steam-installer
+                sudo apt install -y steam-installer
                 ;;
             *)
                 echo
