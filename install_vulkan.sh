@@ -19,7 +19,7 @@ cleanup() {
 }
 trap cleanup EXIT
 
-read -rp "${CYAN}Do you want to build Mesa + Vulkan for Crostini? ${BOLD}(y/N)${RESET}${CYAN}: ${RESET}" BUILD_CHOICE
+read -rp "${CYAN}Do you want to Install Steam + Prismlauncher for Crostini? ${BOLD}(y/N)${RESET}${CYAN}: ${RESET}" BUILD_CHOICE
 case "$BUILD_CHOICE" in
     y|Y|yes|YES|Yes)
         echo
@@ -77,9 +77,9 @@ fi
 echo "${BLUE}"
 sudo apt -o Acquire::ForceIPv4=true update
 echo "${RESET}"
+sudo apt install -y vulkan-tools mesa-utils vulkan-validationlayers
 sudo apt install flatpak -y
 flatpak --user remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-flatpak install flathub org.prismlauncher.PrismLauncher -y
 sudo curl -fsSL "https://raw.githubusercontent.com/shadowed1/Chard/main/bin/vulkan_tester.sh" -o "/bin/vulkan_tester" 2>/dev/null
 sleep 0.2
 sudo chmod +x /bin/vulkan_tester 2>/dev/null
