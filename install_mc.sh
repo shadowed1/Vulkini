@@ -80,6 +80,7 @@ echo "${RESET}"
 sudo apt install flatpak -y
 flatpak --user remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 flatpak install flathub org.prismlauncher.PrismLauncher -y
+flatpak override --user --nosocket=wayland org.prismlauncher.PrismLauncher
 sudo curl -fsSL "https://raw.githubusercontent.com/shadowed1/Chard/main/bin/vulkan_tester.sh" -o "/bin/vulkan_tester" 2>/dev/null
 sleep 0.2
 sudo chmod +x /bin/vulkan_tester 2>/dev/null
