@@ -1,8 +1,8 @@
 # Goal: Achieve the best performance that Crostini will allow.
 
 1. Back up your VM or don't
-2. Go to Chrome://flags and enable GPU enabled
-3. Restart.
+2. Go to Chrome://flags and enable Crostini GPU Support flag
+3. Restart ChromeOS
 4. Start Crostini/Penguin
 5. Copy paste in Terminal:
 ```
@@ -10,7 +10,7 @@ sudo curl -fsSL "https://raw.githubusercontent.com/shadowed1/Vulkini/main/instal
 sudo chmod +x "/bin/install_vulkan"
 install_vulkan
 ```
-6. Restart
+6. Restart Crostini
 7. Enjoy
 
   
