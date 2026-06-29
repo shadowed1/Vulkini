@@ -16,6 +16,8 @@ echo
 cleanup() {
     echo
     echo "${YELLOW}Exiting Crostini Vulkan setup...${RESET}"
+    echo "${YELLOW}${BOLD}Please reboot Crostini to enable GPU acceleration. ${RESET}"
+    echo
 }
 trap cleanup EXIT
 
