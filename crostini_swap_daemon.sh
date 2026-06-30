@@ -143,7 +143,7 @@ cmd_status() {
 }
 
 cmd_startup() {
-    printf "${CYAN}${BOLD}Enable auto-start with Crostini? [Y/n]: ${RESET}"
+    printf "${CYAN}${BOLD}Enable swap daemon to boot with Crostini? [Y/n]: ${RESET}"
     read -r answer
     case "${answer,,}" in
         ""|y|yes) _startup_enable ;;
