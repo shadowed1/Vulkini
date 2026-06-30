@@ -16,6 +16,7 @@ SWAPFILE="/swapfile"
 SERVICE_NAME="crostini-swap-daemon"
 SERVICE_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
 INSTALL_PATH="/bin/crostini_swap_daemon"
+SAFETY_MARGIN_MB=1024
 
 detect_ram_mb() {
     awk '/MemTotal/ {printf "%d", $2/1024}' /proc/meminfo
@@ -52,21 +53,65 @@ mb_from_arg() {
     fi
 }
 
+avail_mb() {
+    df --output=avail -B1M "$(dirname "$SWAPFILE")" 2>/dev/null | tail -n1 | tr -d ' '
+}
+
 apply_swap() {
     local size_mb="$1"
     if ! [[ "$size_mb" =~ ^[0-9]+$ ]] || [ "$size_mb" -le 0 ]; then
         echo "${RED}${BOLD}[crostini_swap_daemon] ERROR:${RESET} invalid swap size '${size_mb}'"
         exit 1
     fi
-    echo "${CYAN}[crostini_swap_daemon] target swap size: ${BOLD}$(clean_size "$size_mb")${RESET}"
+
+    # drop the old swapfile first so its space counts as free
     sudo /usr/sbin/swapoff "$SWAPFILE" 2>/dev/null
     sudo rm -f "$SWAPFILE" 2>/dev/null
+
+    local free_mb cap_mb
+    free_mb=$(avail_mb)
+
+    if [[ "$free_mb" =~ ^[0-9]+$ ]]; then
+        cap_mb=$(( free_mb - SAFETY_MARGIN_MB ))
+
+        if [ "$cap_mb" -le 0 ]; then
+            echo "${RED}${BOLD}[crostini_swap_daemon] ERROR:${RESET} only $(clean_size "$free_mb") free, not enough to safely create swap"
+            exit 1
+        fi
+
+        if [ "$size_mb" -gt "$cap_mb" ]; then
+            echo "${YELLOW}[crostini_swap_daemon] requested $(clean_size "$size_mb") exceeds free space, limiting to ${BOLD}$(clean_size "$cap_mb")${RESET}${YELLOW} - Free up additional space! ${RESET}"
+            size_mb="$cap_mb"
+        fi
+    else
+        echo "${YELLOW}[crostini_swap_daemon] WARNING:${RESET} could not determine free space, skipping size check"
+    fi
+
+    echo "${CYAN}[crostini_swap_daemon] target swap size: ${BOLD}$(clean_size "$size_mb")${RESET}"
+
     sudo touch "$SWAPFILE"
     sudo chattr +C "$SWAPFILE" 2>/dev/null
-    sudo fallocate -l "${size_mb}M" "$SWAPFILE"
+
+    if ! sudo fallocate -l "${size_mb}M" "$SWAPFILE"; then
+        echo "${RED}${BOLD}[crostini_swap_daemon] ERROR:${RESET} fallocate failed, aborting"
+        sudo rm -f "$SWAPFILE"
+        exit 1
+    fi
+
     sudo chmod 600 "$SWAPFILE"
-    sudo mkswap "$SWAPFILE" > /dev/null
-    sudo /usr/sbin/swapon "$SWAPFILE"
+
+    if ! sudo mkswap "$SWAPFILE" > /dev/null; then
+        echo "${RED}${BOLD}[crostini_swap_daemon] ERROR:${RESET} mkswap failed, aborting"
+        sudo rm -f "$SWAPFILE"
+        exit 1
+    fi
+
+    if ! sudo /usr/sbin/swapon "$SWAPFILE"; then
+        echo "${RED}${BOLD}[crostini_swap_daemon] ERROR:${RESET} swapon failed, aborting"
+        sudo rm -f "$SWAPFILE"
+        exit 1
+    fi
+
     local active
     active=$(swapon --show=NAME,SIZE --noheadings "$SWAPFILE" 2>/dev/null)
     echo "${GREEN}[crostini_swap_daemon] swap active:${BOLD} ${active:-$SWAPFILE}"
