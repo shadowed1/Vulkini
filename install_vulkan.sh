@@ -78,12 +78,37 @@ if [ "$(uname -m)" != "aarch64" ]; then
     fi
 fi
 
+
+
 echo "${BLUE}"
 sudo apt -o Acquire::ForceIPv4=true update
 echo "${RESET}"
 sudo apt install -y vulkan-tools mesa-utils vulkan-validationlayers
+
+read -rp "${CYAN}Enable Swap in Crostini? ${BOLD}(y/N)${RESET}${CYAN}: ${RESET}" SWAP_CHOICE
+        echo
+    
+        case "$SWAP_CHOICE" in
+            y|Y|yes|YES|Yes)
+                sudo curl -fsSL "https://raw.githubusercontent.com/shadowed1/Vulkini/main/crostini_swap_daemon.sh" -o "/bin/crostini_swap_daemon"
+                sudo chmod +x "/bin/crostini_swap_daemon"
+                crostini_swap_daemon startup
+                crostini_swap_daemon
+                ;;
+            *)
+                echo
+                echo "${YELLOW}Skipping swap setup.${RESET}"
+                echo
+                ;;
+        esac
+
+
 sudo curl -fsSL "https://raw.githubusercontent.com/shadowed1/Chard/main/bin/vulkan_tester.sh" -o "/bin/vulkan_tester" 2>/dev/null
 sleep 0.2
 sudo chmod +x /bin/vulkan_tester 2>/dev/null
+echo "${RED}${BOLD}Restart Linux VM and re-run ${RESET}${BOLD}${YELLOW}vulkan_tester${RESET}"
 vulkan_tester 2>/dev/null
-echo "${RESET}"
+echo "${RED}${BOLD}Restart Linux VM and re-run ${RESET}${BOLD}${YELLOW}vulkan_tester${RESET}"
+
+
+
