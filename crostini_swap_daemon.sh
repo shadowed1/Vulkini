@@ -165,6 +165,7 @@ Description=Crostini Swap Daemon
 After=local-fs.target systemd-tmpfiles-setup.service
 [Service]
 Type=oneshot
+ExecStartPre=/bin/sleep 10
 ExecStart=${INSTALL_PATH}
 RemainAfterExit=yes
 [Install]
