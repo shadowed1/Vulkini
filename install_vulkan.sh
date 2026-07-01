@@ -105,9 +105,9 @@ read -rp "${CYAN}Enable Swap in Crostini? ${BOLD}(y/N)${RESET}${CYAN}: ${RESET}"
 
 sudo curl -fsSL "https://raw.githubusercontent.com/shadowed1/Chard/main/bin/gpu_test.sh" -o "/bin/gpu_test" 2>/dev/null
 sleep 0.2
-sudo chmod +x /bin/vulkan_tester 2>/dev/null
+sudo chmod +x /bin/gpu_test 2>/dev/null
 echo "${RED}${BOLD}Restart Linux VM and re-run ${RESET}${BOLD}${YELLOW}vulkan_tester${RESET}"
-vulkan_tester 2>/dev/null
+gpu_test 2>/dev/null
 echo "${RED}${BOLD}Restart Linux VM and re-run ${RESET}${BOLD}${YELLOW}vulkan_tester${RESET}"
 
 
