@@ -6,9 +6,7 @@
 4. Start Crostini/Penguin
 5. Copy paste in Terminal:
 ```
-sudo curl -fsSL "https://raw.githubusercontent.com/shadowed1/Vulkini/main/install_vulkan.sh" -o "/bin/install_vulkan"
-sudo chmod +x "/bin/install_vulkan"
-install_vulkan
+bash <(wget -qO- "https://raw.githubusercontent.com/shadowed1/Vulkini/main/bin/install_vulkan.sh")
 ```
 6. Restart Crostini
 7. Enjoy
