@@ -102,13 +102,7 @@ read -rp "${CYAN}Enable Swap in Crostini? ${BOLD}(y/N)${RESET}${CYAN}: ${RESET}"
                 ;;
         esac
 
-
-sudo curl -fsSL "https://raw.githubusercontent.com/shadowed1/Chard/main/bin/gpu_test.sh" -o "/bin/gpu_test" 2>/dev/null
-sleep 0.2
-sudo chmod +x /bin/gpu_test 2>/dev/null
-echo "${RED}${BOLD}Restart Linux VM and re-run ${RESET}${BOLD}${YELLOW}gpu_test${RESET}"
-gpu_test 2>/dev/null
-echo "${RED}${BOLD}Restart Linux VM and re-run ${RESET}${BOLD}${YELLOW}gpu_test${RESET}"
-
-
+echo
+echo "${RED}${BOLD}Please Restart Linux VM${RESET}"
+echo
 
